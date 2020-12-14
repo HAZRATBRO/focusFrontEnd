@@ -1,0 +1,95 @@
+ <div class="skew-c"></div>
+<div class="colour-block"> 
+<mat-card>
+
+    <mat-card-title>Welcome to Focus Edutech</mat-card-title><br>
+ <mat-card-content >
+   <div *ngIf="signup===false" >
+    <form [formGroup]='loginGroup'>
+      <p>
+      <mat-form-field >
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
+         
+        
+        <mat-error *ngIf="loginGroup.controls.username.hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="pass" >
+        <mat-error *ngIf="loginGroup.controls.pass.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="loginGroup.controls.pass.hasError('minlength')">Password must have at least 8 characters</mat-error>
+      </mat-form-field> 
+    </p>
+    <div class="button">
+      <mat-checkbox id="check1"  [ngModelOptions]="{standalone: true}" *ngIf="signup===false" [(ngModel)]="signup">Signup For FTSE</mat-checkbox> &nbsp;&nbsp;&nbsp;
+      <button *ngIf="signup===false"  (click)="submitSignin()" mat-raised-button color="primary" >Login</button>
+    </div>
+      </form> 
+    </div>
+      <div *ngIf="signup===true">
+      <form   [formGroup]='signupGroup'>
+        <p>
+        <mat-form-field >
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="emailFormControl" [errorStateMatcher]="matcher"
+                   placeholder="Ex. pat@example.com">
+             
+            <mat-error *ngIf="signupGroup.controls.emailFormControl.hasError('email') && !loginGroup.controls.emailFormControl.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="signupGroup.controls.emailFormControl.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="text" maxlength="10" (keypress)="validate($event)" matInput formControlName="phoneNumber" [errorStateMatcher]="matcher"
+            placeholder="Ex. 9999999990">
+            <mat-error *ngIf="signupGroup.controls.phoneNumber.hasError('required')">
+             Phone Number is<strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="signupGroup.controls.phoneNumber.hasError('minlength') || signupGroup.controls.phoneNumber.hasError('maxLength') ">
+             Please Enter a valid number
+            </mat-error> 
+          </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field >
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="userName">
+             
+            
+            <mat-error *ngIf="signupGroup.controls.userName.hasError('required')">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <input matInput type="password" placeholder="Password" formControlName="pass" >
+            <mat-error *ngIf="loginGroup.controls.pass.hasError('required')">Password is required</mat-error>
+            <mat-error *ngIf="loginGroup.controls.pass.hasError('minlength')">Password must have at least 8 characters</mat-error>
+          </mat-form-field>
+        </p> 
+        <div class="button">
+          <mat-checkbox *ngIf="signup===true"  [ngModelOptions]="{standalone: true}" id="check2" [(ngModel)]="signup">Already a User?</mat-checkbox>&nbsp;&nbsp;&nbsp;
+          <button *ngIf="signup===true" (click)="submitSignup()" mat-raised-button color="primary">Signup</button><br>
+           
+         </div>
+          </form> 
+          <mat-error *ngIf="errResponse!==''">{{errResponse}}</mat-error>
+        </div>
+      
+        
+    </mat-card-content>  
+    
+    </mat-card>
+     
+  </div>
+
+ 

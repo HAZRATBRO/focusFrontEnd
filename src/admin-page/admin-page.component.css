@@ -1,0 +1,21 @@
+.cover{
+    top:20%; width:100%; text-align:center; position:fixed;  
+}
+.header{
+        font-size: 7vh;
+        padding: 2%;
+        text-align: center;
+        background: #03a9f4;
+        color: white;
+        font-size: 30px;
+ 
+}
+.admin-card{
+margin: 0 auto;
+display: inline-block;
+color: black;
+background-color: #fcf4f4; 
+width: 80vw;
+height: 70vh;
+}
+

@@ -1,0 +1,112 @@
+.cover{
+    width:100%; text-align:center; position:fixed; 
+    overflow-y:scroll; 
+    position:relative;
+}
+.header{
+       padding: 2%;
+       color: white;
+       font-size: larger;
+       background-color: #03a9f4;
+}
+.quiz-card{
+margin: 0 auto;
+display: inline-block;
+color: black;
+background-color: #fcf4f4; 
+width: 80vw;
+height: 80%;
+}
+
+.stepper{
+   height: 65vh;
+}
+
+#question_list{
+    float: right;
+    width:25%;
+    max-height: 80vh;
+/* overflow: auto; */
+}
+app-question-view{
+    float: left;
+    width: 70%; 
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); 
+    margin-left: 1vw;
+}
+ 
+.jumpQuestionSec{
+    width: 28%;
+    float: right;
+    padding: 1em;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    min-height: 24em;
+    background-color:#16192b;
+    height: 100%;
+}
+.jumpQuestionSec ul li {
+    display: inline-block;
+    margin-bottom: 0.5em;
+}
+.jumpQuestionSec ul li a {
+    cursor: pointer;
+    width: 2.35em;
+    height: 2.35em;
+    line-height: 2.35em;
+    text-align: center;
+    display: inline-block;
+}
+a:link, a:visited {
+    cursor: pointer; 
+    padding: 1px 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+   .answered{
+    background-color: #06ff1b;
+    color: white;
+   }
+   .notAnswered{
+    background-color: #ff0606;
+    color: white;
+   }
+   .notVisited{
+    background-color: #f7f0f0;
+    color: black;
+   }
+   .mark{
+    background-color: #d606ff;
+    color: white;
+   }
+   .left{
+    float: left;
+   }
+   .right{
+    float:right;  
+   }
+   .left  p{
+       color: white;
+   }
+   .right p{
+       color: white;
+   }
+   .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+   transition-duration: 0.4s;
+  }
+  .button3 {padding: 14px 40px;}  
+  .button3:hover {
+    background-color: #28DF2F;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  }

@@ -1,0 +1,97 @@
+.overlay-video::before {
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    position: absolute;
+    background-color: rgba(0, 33, 71, 0.88);
+    height: 100%;
+    width: 100%;
+}
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+ 
+.video-area {
+    padding: 108px 0 120px;
+    position: relative;
+}
+.overlay-video {
+    position: relative;
+}
+.bg-common-style {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.video-content .video-title {
+    letter-spacing: 1px;
+    font-size: 36px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.video-content {
+    position: relative;
+    text-align: center;
+}
+.play-btn {
+    z-index: 2;
+    border: 3px solid #ffffff;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border-radius: 50%;
+    display: inline-block;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    text-align: center
+}
+
+.play-btn i {
+    color: #fdc800;
+    font-size: 20px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
+.play-btn:hover {
+    border: 3px solid #fdc800;
+   
+}
+.play-btn {
+    z-index: 2;
+    border: 3px solid #ffffff;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -khtml-border-radius: 50%;
+    border-radius: 50%;
+    display: inline-block;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+a {
+    text-decoration: none;
+}
+ 

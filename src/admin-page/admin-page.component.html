@@ -1,0 +1,41 @@
+<div [@EnterLeave]="'flyIn'" class="cover">
+    <mat-card class="admin-card" layout="row" layout-align="center center">
+    <mat-card-header class="header">
+        <mat-card-title layout="row" style="font-size: larger;" layout-align="center center">Welcome to Focus Admin</mat-card-title>
+    
+    </mat-card-header>
+     <mat-card-content >
+        
+         
+        <div>
+            <h2> Existing Question Papers </h2>
+        </div> 
+        <div class="example-button-row"> 
+        <div class="tests" *ngFor="let testSet of testSets"> 
+        <button class="quizBtn" mat-button [matMenuTriggerFor]="menu">{{testSet.testName}}</button>
+           </div>
+        </div>
+     
+            <mat-menu #menu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+            </mat-menu>
+        
+            <!-- <div class="addQuiz">
+                
+                <button mat-raised-button color="primary"   aria-label="Create a new Quiz">
+                 Create New Quiz
+                </button>
+              </div> -->
+           
+       
+           
+        </mat-card-content>    
+           
+        <mat-card-actions style="margin-top: 45vh;">
+           <button mat-raised-button color="primary" (click)="createNewQuiz()">New Quiz</button>
+           </mat-card-actions>
+    
+    
+        </mat-card>
+    </div>

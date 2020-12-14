@@ -1,0 +1,20 @@
+Bacche se income???
+Material softcopy
+Admissions for the academic year 2020-21 for students moving from i) class X to Xi (10 to 11)
+           ii)class Xi to Xii(11 to 12) via (FTSE) 
+                                      
+           iii) For students Xii to Xiii (pass out branches) admission is based on JEE Main/Adv Score
+ 		Contact us:903196547/9852360114
+
+ 
+-Add navigation arrow in homepage images !!!!Hard
+
+--reduce image size of faculty image 2
+--reduce footer font-size 
+--give expanding menus
+--remove google plus link
+--reduce about us image size(center)
+--contact us page copy origence
+--admissions page copy origence
+
+change to fade in landing side

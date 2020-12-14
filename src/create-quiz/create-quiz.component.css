@@ -1,0 +1,23 @@
+.cover{
+     width:100%; text-align:center; position:fixed; 
+     overflow-y:scroll; 
+     position:relative;
+}
+.header{
+        padding: 2%;
+        color: white;
+        font-size: larger;
+        background-color: #03a9f4;
+}
+.admin-card{
+margin: 0 auto;
+display: inline-block;
+color: black;
+background-color: #fcf4f4; 
+width: 80vw;
+height: 80%;
+}
+
+.stepper{
+    height: 65vh;
+}

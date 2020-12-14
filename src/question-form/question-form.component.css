@@ -1,0 +1,11 @@
+.control{
+    display: flex; flex-direction: column;
+    /* display: inline-grid; */ 
+    /* display: grid; */
+    margin: 1vh 0;
+
+ }
+
+ .options{
+    margin-bottom: 1vw;
+ }

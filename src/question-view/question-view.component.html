@@ -1,0 +1,56 @@
+<div [@dataChange]="dataState" (@dataChange.done)="dataState = 'done'">
+<mat-card >
+
+
+    <img mat-card-image src={{questionData.optionFile}} alt="Internet Not Working">
+    <mat-card-content>
+
+            <div *ngIf='questionData.type === "SingleChoice"' >
+                
+                 
+                    <mat-radio-group class='control' required [(ngModel)]="questionData.response.input" aria-label="Select an option">
+                    <mat-radio-button class='options'  value="A"> A</mat-radio-button><br>
+                    <mat-radio-button class='options'  value="B"> B</mat-radio-button><br>
+                    <mat-radio-button class='options'  value="C"> C</mat-radio-button><br>
+                    <mat-radio-button class='options'  value="D"> D</mat-radio-button>
+                      </mat-radio-group>
+                
+                    </div> 
+               
+                
+                <div *ngIf='questionData.type === "MultipleChoice"'  class='control'>
+                  <mat-checkbox class='options' id='A' (change)="onChange('A' , $event.checked)" [checked]='exists("A")'>A</mat-checkbox> <br>
+                  <mat-checkbox class='options' id='B' (change)="onChange('B' , $event.checked)" [checked]='exists("B")'>B</mat-checkbox> <br>
+                  <mat-checkbox class='options' id='C' (change)="onChange('C' , $event.checked)" [checked]='exists("C")'>C</mat-checkbox><br>
+                  <mat-checkbox class='options' id='D' (change)="onChange('D' , $event.checked)" [checked]='exists("D")'>D</mat-checkbox>  
+                </div> 
+               <br>
+             
+             <div *ngIf='questionData.type === "FillInTheBlanks"' >
+              <mat-form-field class="example-full-width">
+            <mat-label>Enter Answer</mat-label>
+            <input matInput  [(ngModel)]="questionData.response.input"  placeholder="Fill in the Blanks">
+              </mat-form-field>   
+          </div><br>
+              
+            
+          
+            <div *ngIf='questionData.type === "NumericalType"' >
+              <mat-form-field class="example-full-width">
+                <mat-label>Enter Answer</mat-label>
+                <input matInput  [(ngModel)]="questionData.response.input"  placeholder="Enter Numerical Answer" >
+                  </mat-form-field>  
+              </div><br>
+            
+             <div>
+              <button (click)="changeState('mark')" class="button button2">Mark For Review and next</button>
+              <button (click)="changeState('clear')" class="button button2">Clear Response</button>  
+             
+            </div>
+            <button (click)="changeState('answered')" class="buttonsave button2">Save and Next</button> 
+
+    </mat-card-content>
+    
+  </mat-card>
+  
+</div>

@@ -1,0 +1,34 @@
+$mat-focus:(
+    50: fdf4e2,
+    100: fbe3b6,
+    200: f8d185,
+    300: f5be54,
+    400: f3b030,
+    500: f1a20b,
+    600: ef9a0a,
+    700: ed9008,
+    800: eb8606,
+    900: e77503,
+    A100: ffffff,
+    A200: ffebda,
+    A400: ffcfa7,
+    A700: ffc18e,
+     
+    contrast: (
+      50:$black-87-opacity,
+      100:$black-87-opacity,
+      200:$black-87-opacity,
+      300:$black-87-opacity,
+      400:$black-87-opacity,
+      500: white,
+      600: white,
+      700: white,
+      800: $white-87-opacity,
+      900:$white-87-opacity,
+      A100:$black-87-opacity,
+      A200:white,
+      A400:white,
+      A700:white
+    ),
+    
+  );

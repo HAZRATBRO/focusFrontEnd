@@ -1,0 +1,64 @@
+ <div *ngIf="savedQuizzes.length > 0" class="chip">
+  <b> Unfinished Tests</b>
+ </div>
+<div *ngIf="savedQuizzes.length > 0" id='card1' class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
+   
+    <div style="margin-left: 1vw;" fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%"  *ngFor="let quiz of savedQuizzes">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title><b>{{quiz.testName}}</b></mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="./../assets/focusLogo.PNG" />
+        <mat-card-content>
+        <b> Quiz Duration:</b> {{quiz.testDuration}}<br>
+        <b> Time Remaining:</b> {{quiz.timeRemaining}}
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="alternate-primary" (click)='routeTest("quiz",quiz.testName)'>Resume</button>  
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+<br><br>
+
+<div *ngIf="userResponses.length > 0" class="chip">
+  <b> Finished Tests</b>
+ </div>
+<div *ngIf="userResponses.length > 0" id='card2' class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
+   
+    <div style="margin-left: 1vw;" fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%"  *ngFor="let quiz  of userResponses">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title><b>{{quiz.userResponses.testName}}</b></mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="./../assets/focusLogo.PNG" />
+        <mat-card-content>
+        <b> Quiz Duration:</b> {{quiz.userResponses.testDuration}}
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="alternate-primary" (click)='routeTest("test",quiz.userResponses.testName)'>Score</button>  
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+<br><br>
+<div *ngIf="allQuizzes.length > 0" class="chip">
+    <b> Unattempted Tests</b>
+   </div>
+  <div *ngIf="allQuizzes.length > 0" id='card3'  class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
+    
+    <div style="margin-left: 1vw;" fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%"  *ngFor="let quiz of allQuizzes">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title><b>{{quiz.testName}}</b></mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="./../assets/focusLogo.PNG" />
+        <mat-card-content>
+          <p> <b> Quiz Duration:</b> {{quiz.testDuration}} min</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="alternate-primary" (click)='routeTest("quiz",quiz.testName)'>Start Test</button>  
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>

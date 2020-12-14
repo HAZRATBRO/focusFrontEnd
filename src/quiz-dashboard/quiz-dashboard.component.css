@@ -1,0 +1,12 @@
+.content{
+    margin-left: 1vw;
+    margin-top: 0.5vw;
+}
+mat-card{
+    height: 110%;
+}
+button{
+        background-color: #00bcd7;
+        color: white;
+}
+ 

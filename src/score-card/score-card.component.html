@@ -1,0 +1,120 @@
+ 
+ <div class="main-swimlane bg-yellow">
+     <h3>Score Card</h3>
+     <div class="breadcrumbs-wrapper"> 
+         <nav>
+             <div class="nav-wrapper">
+                 <div class="col s12">       
+                     <a ng-repeat="step in steps" href="/lms/" class="breadcrumb ng-scope">
+                        <span >Home</span></a>
+                        <a ng-repeat="step in steps" href="/lms/exam/170" class="breadcrumb ng-scope"><span ng-bind-html="step.ncyBreadcrumbLabel | sanitize" class="ng-binding">Class XI - JEE (Main...</span></a>
+                        <a ng-repeat="step in steps" href="/lms/test/26/exam/170" class="breadcrumb ng-scope"><span ng-bind-html="step.ncyBreadcrumbLabel | sanitize" class="ng-binding">Test</span></a>
+                        <a ng-repeat="step in steps" href="/lms/scoreCard/16494/170" class="breadcrumb ng-scope"><span ng-bind-html="step.ncyBreadcrumbLabel | sanitize" class="ng-binding">Score Card</span></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+ <div class="analyze-header">
+<div class="limitWidth">
+    <div class="row">  
+        <h4 class="ng-binding">Question Name Here</h4> 
+    </div> 
+    <div class="row">
+        <div class="col s2 m2 l2 ng-scope"  > 
+           <div class="stat-circle" > 
+               <div class="stat-value ng-binding" >92</div> 
+               <div class="stat-title" >My Rank<sup>*</sup></div>
+               </div>
+                <p class="rankoutof ng-binding"><sup>*</sup>Out of 184 students</p>
+               </div>
+               <div class="col s2 m2 l2"  > 
+                   <div class="stat-circle"> 
+                       <div class="stat-value ng-binding"  >{{myTotalScore}} ({{percentageScore}}%)</div>
+                        <div class="stat-title" >My Score<sup>*</sup></div> 
+                       </div> 
+                       <p class="rankoutof ng-binding"><sup>*</sup>Out of {{quizResult.totalMarks}} marks</p>
+                    </div>
+                    <div class="col s2 m2 l2"> 
+                        <div class="stat-circle"> 
+                            <div class="stat-value ng-binding">{{accuracy}}%</div>
+                             <div class="stat-title">Accuracy</div>
+                             </div> 
+                            </div>
+                   </div>  
+         
+ </div>
+           
+</div>
+</div>
+<div class="matrix-butts limitWidth">
+     <a class="buttonsave button2" [ngClass]="{'active': tab==='overall'}" (click)="setData('overall')" href="javascript:;" id='overall'>Overall</a> 
+       <a  class="buttonsave button2" [ngClass]="{'active': tab==='subjectWise'}" (click)="setData('subjectWise')" href="javascript:;" id='subject' >Subject-wise </a>
+      <a class="buttonsave button2" [ngClass]="{'active': tab==='strengthWeaks'}" (click)="setData('strengthWeaks')" href="javascript:;" id='Strength'>Strength and Weakness </a> </div>
+<div *ngIf="tab==='overall'" class="limitWidth">
+    <h4>Marks Scored</h4>
+ <app-focus-chart   [chartLabels]='labels' [barData]='barData'></app-focus-chart>
+<div class="limitWidth timeStats">
+     <h4>Time Taken</h4> 
+     <div *ngIf="tab==='overall'">
+     <div *ngFor="let section of quizResult.sections"class="stat-box"> 
+         <div class="stat-value" >
+                {{section.timeSpent | formatter}}
+         </div> 
+         <div class="stat-title">
+             {{section.name}}
+            </div> 
+        </div>
+        </div> 
+    </div>
+
+    
+</div>
+
+<div  *ngIf="tab==='subjectWise'" >
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+         
+        
+        <!-- Name Column -->
+        <ng-container matColumnDef="Section">
+          <th mat-header-cell *matHeaderCellDef> Section </th>
+          <td mat-cell *matCellDef="let element"> {{element.Section}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Correct">
+          <th mat-header-cell *matHeaderCellDef> Correct </th>
+          <td mat-cell *matCellDef="let element"> {{element.Correct}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Wrong">
+          <th mat-header-cell *matHeaderCellDef> Wrong </th>
+          <td mat-cell *matCellDef="let element"> {{element.Wrong}} </td>
+        </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Skipped">
+        <th mat-header-cell *matHeaderCellDef> Skipped </th>
+        <td mat-cell *matCellDef="let element"> {{element.Skipped}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Correct_Marks">
+        <th mat-header-cell *matHeaderCellDef> Correct Marks </th>
+        <td mat-cell *matCellDef="let element"> {{element.Correct_Marks}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Wrong_mark">
+        <th mat-header-cell *matHeaderCellDef> Wrong Marks </th>
+        <td mat-cell *matCellDef="let element"> {{element.Wrong_mark}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Total">
+        <th mat-header-cell *matHeaderCellDef> Total Marks </th>
+        <td mat-cell *matCellDef="let element"> {{element.Total}} </td>
+      </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+      
+</div>
