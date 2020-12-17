@@ -113,7 +113,7 @@ export class LoginPageComponent implements OnInit , OnDestroy{
         }
         else{
            
-          this.router.navigate(['ftseQuiz'])
+          this.router.navigate(['/ftseQuiz'])
         }
       })
 
@@ -132,7 +132,7 @@ export class LoginPageComponent implements OnInit , OnDestroy{
         }
         else{
           // localStorage.setItem("userToken" , data.token)
-          this.router.navigate(['ftseQuiz'])
+          this.router.navigate(['/ftseQuiz'])
 
            
           

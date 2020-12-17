@@ -1,8 +1,8 @@
   
 
      <div [@EnterLeave]="'flyIn'" class="cover">
-        <mat-tab-group color="alternate-primary" (selectedIndexChange)="changeQuestion(sectionIndex,0)" [(selectedIndex)]="sectionIndex" dynamicHeight>
-          <mat-tab *ngFor="let section of quizData.sections ;  let i = index" label="{{section.name}}">
+        <mat-tab-group color="primary" (selectedIndexChange)="changeQuestion(sectionIndex,0)" [(selectedIndex)]="sectionIndex" dynamicHeight>
+          <mat-tab *ngFor="let section of quizData.sections ;  let i = index" label="{{section.sectionName}}">
            
             
           </mat-tab>

@@ -14,12 +14,13 @@ export class FtseQuizComponent implements OnInit {
   constructor(private service:SupportService , private router:Router) { }
 
   ngOnInit(): void {
-    this.savedQuiz = localStorage.getItem("FTSE")!=null
-    console.log((this.savedQuiz!== true) || (this.isComplete!==true))
+    this.savedQuiz = localStorage.getItem("Focus Chemistry DPP")!=null
+    console.log((this.savedQuiz!== true) && (this.isComplete!==true))
     console.log(this.savedQuiz)
-    this.service.getCompletionStatus({quizName:"FTSE"}).subscribe((data)=>{
-      console.log(data)
+    this.service.getCompletionStatus("Focus Chemistry DPP").subscribe((data)=>{
+      this.isComplete = data.isComplete
     })
+    console.log(this.isComplete)
   }
   routeTest(msg:string , testName:string){
     console.log(msg , testName)

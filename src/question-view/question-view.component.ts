@@ -83,7 +83,7 @@ export class QuestionViewComponent implements OnInit,OnChanges {
     return true;
   }
   input = String.fromCharCode(e.which);
-  return !!/[\d\s]/.test(input);
+  return !!/^[0-9]+(\.[0-9]{1,2})?$/.test(input);
   }
   
   saveResponse(){

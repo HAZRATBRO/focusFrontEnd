@@ -65,14 +65,31 @@ export class LoginGuard implements CanActivate {
     //       });
     // }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :  Promise<boolean>{
-         console.log(route.url)
-        this.spinner.show()
         let t = new Promise<boolean>((resolve , reject)=>{
-            setTimeout(()=>{this.spinner.hide() ; resolve(true)} , 2000)
+            setTimeout(()=>{ this.spinner.hide() ; resolve(true)} , 2000)
         })  
         let f = new Promise<boolean>((resolve , reject)=>{
-            setTimeout(()=>{this.spinner.hide() ;resolve(false)} , 2000)
-        })  
+            setTimeout(()=>{ this.spinner.hide() ;resolve(false)} , 2000)
+        }) 
+        
+        let passWithoutVerify = ['','faculty','admissions','contact','login','about']
+        if(passWithoutVerify.includes(route.url.toString()))
+        {
+             
+            this.spinner.show()
+            if(route.url.toString() === 'login'){
+                if(this.currentUser !== null && this.currentUser!== undefined ){
+                    if(verifyToken(this.currentUser.token))
+                        {setTimeout(()=>{
+                            this.spinner.hide()
+                            this.router.navigate(['/ftseQuiz'])
+                        } , 3000)}
+                }
+            }
+             return t;
+        }
+        this.spinner.show()
+         
             try {
                 if(this.currentUser !== null && this.currentUser!== undefined ){
                         console.log("Stop epin")

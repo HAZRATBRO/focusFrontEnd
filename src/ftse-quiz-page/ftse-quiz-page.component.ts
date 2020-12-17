@@ -1,13 +1,28 @@
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SupportService } from 'src/services/support.service';
+import { ToolbarService } from 'src/services/toolbar.service';
  
 @Component({
   selector: 'app-ftse-quiz-page',
   templateUrl: './ftse-quiz-page.component.html',
   styleUrls: ['./ftse-quiz-page.component.css','../quiz-page/quiz-page.component.css']
+  ,
+  animations:[
+    trigger('EnterLeave', [
+      state('flyIn', style({ transform: 'translateX(0)' })),
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)' }),
+        animate('0.5s 300ms ease-in')
+      ]),
+      transition(':leave', [
+        animate('0.3s ease-out', style({ transform: 'translateX(100%)' }))
+      ])
+    ])
+  ]
 })
 export class FtseQuizPageComponent implements OnInit {
 
@@ -25,7 +40,28 @@ export class FtseQuizPageComponent implements OnInit {
  elem:any
    
  interval: any;
+ warningCount:number = 0
  
+ cheatingCount:any = 0 
+ 
+ @HostListener('window:visibilitychange' , ['$event'])
+ cheating(event:any){
+   !document.hidden?(this.cheatingCount+=1):'Hey'
+   if(this.cheatingCount <= 1){
+     alert("Your result will be submitted if you redirect again")
+   }
+   else {
+     this.submitForced()
+   }
+ }
+ 
+ @HostListener('window:beforeunload' , ['$event'])
+ cheatCheck(event:any){
+    localStorage.setItem("cheatingCount",this.cheatingCount)
+    console.log(this.cheatingCount)
+ }
+ 
+ //event listeners to block source view
  @HostListener('onkeydown',['$event']) 
 keydown (event:any) {
   event = (event || window.event);
@@ -34,28 +70,44 @@ keydown (event:any) {
   }
   return true
 }
-@HostListener('onkeypress' , ['$event'])
-onKeyPress(event:any){
-  event = (event || window.event);
-  if (event.keyCode == 123) {
-  return false;
+
+//event listener for detecting tab changes if any for warning
+ 
+//event listeners to block source view
+@HostListener('window:keydown', ['$event'])
+  keyboardInput(event: any) {
+    // event.preventDefault();
+    event.stopPropagation();
+
+     const e = <KeyboardEvent>event;
+
+    const charCode = e.which ? e.which : e.keyCode;
+     if (e.ctrlKey && e.ctrlKey) {
+       console.log("found")
+       return false};
+    console.log(charCode);
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode < 96 || charCode > 105) {
+      return false;
+    }
+    return true;
   }
-  return true
-  }
-  
   
  @HostListener('contextmenu', ['$event'])
  onRightClick(event:any) {
    event.preventDefault();
  }
 
- constructor( private spinner:NgxSpinnerService,  private route:ActivatedRoute ,private router:Router ,private service:SupportService) {
+ constructor(private toolbarService:ToolbarService ,private spinner:NgxSpinnerService,  private route:ActivatedRoute ,private router:Router ,private service:SupportService) {
         
   }
    
  
  ngOnInit(): void {
   
+  this.toolbarService.hide();
+
+  this.cheatingCount = localStorage.getItem("cheatingCount") == null ? 0:parseInt(localStorage.getItem("cheatingCount")||'0')  
+
   this.elem = document.documentElement
  
   this.service.currentUser.subscribe((data: any)=>{
@@ -155,9 +207,9 @@ submitTest(){
       });
         //stopTheTest
         data.isComplete = true
-        
-         
+        console.log(data)
         localStorage.removeItem(this.quizName)
+        localStorage.removeItem("cheatingCount")
         window.removeEventListener('beforeunload' , this.beforeUnload)
         this.service.uploadQuiz(data, this.user.token).subscribe((data: any) =>{
          
@@ -165,14 +217,42 @@ submitTest(){
         this.spinner.show()
         setTimeout(()=>{
           this.spinner.hide()
-          this.router.navigate(['/score'])
+          this.toolbarService.show()
+          this.router.navigate(['/ftse'])
          
         },3000)
            
        })
    
 }
-
+submitForced(){
+        let data = this.quizData
+       data.sections.forEach((element: any) => {
+         element.questions.forEach((x: any) => {
+            
+           delete x.optionFile
+            
+         });
+       });
+         //stopTheTest
+         data.isComplete = true
+         console.log(data)
+         localStorage.removeItem(this.quizName)
+         window.removeEventListener('beforeunload' , this.beforeUnload)
+         this.service.uploadQuiz(data, this.user.token).subscribe((data: any) =>{
+          
+          clearInterval(this.interval)
+         this.spinner.show()
+         setTimeout(()=>{
+           this.spinner.hide()
+           this.toolbarService.show()
+           this.router.navigate(['/ftse'])
+          
+         },3000)
+            
+        })
+    
+ }
 changeQuestion(i:number, j:number){
   // let element:HTMLElement = document.getElementById("section_"+i) as HTMLElement;
   // console.log(element)
@@ -259,7 +339,8 @@ navigateToSubmit() {
           this.spinner.show()
           setTimeout(()=>{
             this.spinner.hide()
-            this.router.navigate(['/score'])
+            this.toolbarService.show()
+            this.router.navigate(['/ftse'])
            
           },3000)
              

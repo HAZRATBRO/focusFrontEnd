@@ -20,16 +20,17 @@ export class SupportService {
    public currentUser: Observable<User>;
    public loggedInFlag: Observable<boolean>
   private url:string = "http://localhost:8080/focus"
-  constructor(private spinner:NgxSpinnerService, private http:HttpClient) { 
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')|| '{}'));
+  constructor(private spinner:NgxSpinnerService, private http:HttpClient) {
+    let data = localStorage.getItem('currentUser') !== null?JSON.parse(localStorage.getItem('currentUser')||'{}'):null 
+    this.currentUserSubject = new BehaviorSubject<User>(data);
     this.currentUser = this.currentUserSubject.asObservable();
     this.isLoggedIn = new BehaviorSubject<boolean>(false)
     this.loggedInFlag = this.isLoggedIn.asObservable()
   }
   
   getCompletionStatus(data:any):Observable<any>{
-    const headers = new HttpHeaders().set('token', this.currentUserValue.token) 
-   return this.http.post<any>(this.url + '/completionStatus' , data , {headers:headers})
+    const headers = new HttpHeaders().set('token', this.currentUserValue.token).set('quizName' , data) 
+   return this.http.post<any>(this.url + '/completionStatus' , {quizName:data} , {headers:headers})
   }
 
   getClassStatistic(data:any):Observable<any>{

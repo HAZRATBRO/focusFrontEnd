@@ -31,18 +31,19 @@
                         <th>Valid before</th>
                       </tr>
                       <tr>
-                        <td>FTSE</td>
-                        <td>180 minutes</td>
-                        <td>300</td>
-                        <td>December 20,2020</td>
+                        <td>Focus Chemistry DPP</td>
+                        <td>45 minutes</td>
+                        <td>69</td>
+                        <td>December 17,2020</td>
                       </tr>
                     </table>
                   </div>
             </mat-card-content>
             <mat-card-actions>
-              <button (click)='routeTest("ftse","FTSE")' *ngIf="(savedQuiz!== true) || (isComplete!==true) " mat-button>Start</button>
-              <button (click)='routeTest("ftse","FTSE")' *ngIf="savedQuiz== true" mat-button>Resume</button>
-              <button *ngIf="isComplete==true "mat-button>View Score</button>
+              <button (click)='routeTest("intro","Focus Chemistry DPP")' *ngIf="(savedQuiz!== true) && (isComplete!==true) " mat-button>Start</button>
+              <button (click)='routeTest("intro","Focus Chemistry DPP")' *ngIf="savedQuiz== true  && (isComplete!==true) " mat-button>Resume</button>
+              <button (click)='routeTest("score","Focus Chemistry DPP")' *ngIf="isComplete== true" mat-button>View Score</button>
+
             </mat-card-actions>
           </mat-card>
         </div>

@@ -1,1 +1,51 @@
-<p>intro-page works!</p>
+<div class="inner-page-banner-area"  >
+    <div class="container">
+        <div class="pagination-area">
+            <h1 style="opacity: 1;;text-transform:capitalize; font-weight:700; margin-bottom:5px; font-size:48px; color:#ffffff;">
+             
+            </h1>
+            
+        </div>
+    </div>  
+    </div>
+    <div class="skew-cc"></div>
+    <div class="colour-block">
+    <div class="w3-container w3-hoverable instr-table">
+        <h2 class="intro-header">General Instructions</h2>
+        <p>Please Read The Following Intructions carefully:</p>
+        
+        
+        <table class="w3-table">
+          
+   
+  <tr> <b> Total Duration : 3 hrs</b></tr> <br>
+   <tr> <b>Max Marks : 69</b></tr> <br>
+  <tr> <b> Each question can be of Single , Multiple or Numerical Type</b></tr> <br>
+    
+  <tr><b>  Marking scheme : Check First Question Of each Section For Marking scheme</b></tr> <br>
+   
+   <tr><b>Please don't switch tabs , if tabs are switched your quiz will get submitted</b></tr><br>
+  <tr>
+   <b> In case of any issues pertaining to login, etc., please call +91 9031946547/ +91 8299484997 </b></tr> <br>
+    
+   <tr> <b>Please ensure you have good net connectivity.</b></tr> <br>
+    
+   <tr> <b>  Login using email & password.</b></tr> <br>
+    
+    <tr><b>In case the test stops due to connectivity issues or you are accidentally logged out, please login again and continue.</b></tr><br>
+    
+  <tr>  <b>  During the test, candidate's screen activity will be monitored and in case the candidate tries to switch the test screen then the test will be auto submitted.</b></tr> <br> 
+
+  <tr>
+    <mat-radio-group [(ngModel)]="agreed">  
+      <mat-radio-button [value]="true">I Agree</mat-radio-button>&nbsp;&nbsp;
+      <mat-radio-button [value]="false">Disgree</mat-radio-button>
+   </mat-radio-group>
+&nbsp;&nbsp;
+   <button (click)='routeTest("ftse",testName)' *ngIf="agreed" color="primary" mat-raised-button>Proceed To Test</button>
+     </tr>
+
+</table>
+</div>
+</div>
+ 

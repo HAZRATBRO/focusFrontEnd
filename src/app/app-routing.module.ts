@@ -10,6 +10,7 @@ import { FacultyComponent } from 'src/faculty/faculty.component';
 import { FtseQuizPageComponent } from 'src/ftse-quiz-page/ftse-quiz-page.component';
 import { FtseQuizComponent } from 'src/ftse-quiz/ftse-quiz.component';
 import { HomeComponent } from 'src/home/home.component';
+import { IntroPageComponent } from 'src/intro-page/intro-page.component';
 import { LoginPageComponent } from 'src/login-page/login-page.component';
 import { QuestionFormComponent } from 'src/question-form/question-form.component';
 import { QuizDashboardComponent } from 'src/quiz-dashboard/quiz-dashboard.component';
@@ -19,7 +20,7 @@ import { AppComponent } from './app.component';
 import { LoginGuard } from './login.guard';
 
 const routes: Routes = [
-  {path:'' , component:HomeComponent},
+  {path:'' , component:HomeComponent,canActivate:[LoginGuard]},
   {path:'admin' , component:AdminPageComponent ,canActivate:[LoginGuard]},
   {path:'createQuiz' , component:CreateQuizComponent,canActivate:[LoginGuard]},
   {path:'createQuestion' , component:QuestionFormComponent,canActivate:[LoginGuard]},
@@ -27,14 +28,15 @@ const routes: Routes = [
   // {path:'dashboard' ,component:DashboardComponent,canActivate:[LoginGuard]},
   // {path:'quizDash' , component:QuizDashboardComponent,canActivate:[LoginGuard]},
   {path:'ftseQuiz' , component:FtseQuizComponent , canActivate:[LoginGuard]},
-  {path:'about' , component:AboutUsComponent},
-  {path:'score' , component:ScoreCardComponent,canActivate:[LoginGuard]},
-  {path:'faculty',component:FacultyComponent},
-  {path:'admissions', component:AdmissionsComponent},
-  {path:'contact' , component:ContactUsComponent},
-  {path:'login' , component:LoginPageComponent},
+  {path:'about' , component:AboutUsComponent, canActivate:[LoginGuard]},
+  {path:'score' , component:ScoreCardComponent , canActivate:[LoginGuard]},
+  {path:'faculty',component:FacultyComponent, canActivate:[LoginGuard]},
+  {path:'admissions', component:AdmissionsComponent, canActivate:[LoginGuard]},
+  {path:'contact' , component:ContactUsComponent, canActivate:[LoginGuard]},
+  {path:'login' , component:LoginPageComponent, canActivate:[LoginGuard]},
   {path:'results' , component:ScoreCardComponent , canActivate:[LoginGuard]},
-  {path:'ftse' , component:FtseQuizPageComponent , canActivate:[LoginGuard]}
+  {path:'ftse' , component:FtseQuizPageComponent , canActivate:[LoginGuard]},
+  {path:'intro' , component:IntroPageComponent  }
 ];
 
 @NgModule({

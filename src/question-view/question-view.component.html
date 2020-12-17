@@ -5,7 +5,7 @@
     <img mat-card-image src={{questionData.optionFile}} alt="Internet Not Working">
     <mat-card-content>
 
-            <div *ngIf='questionData.type === "SingleChoice"' >
+            <div *ngIf='questionData.type === "SingleChoice" || questionData.type === "ParagraphType" || questionData.type === "MatrixType" '>
                 
                  
                     <mat-radio-group class='control' required [(ngModel)]="questionData.response.input" aria-label="Select an option">
@@ -38,7 +38,7 @@
             <div *ngIf='questionData.type === "NumericalType"' >
               <mat-form-field class="example-full-width">
                 <mat-label>Enter Answer</mat-label>
-                <input matInput  [(ngModel)]="questionData.response.input"  placeholder="Enter Numerical Answer" >
+                <input matInput (keypress)="validate($event)"  [(ngModel)]="questionData.response.input"  placeholder="Enter Numerical Answer" >
                   </mat-form-field>  
               </div><br>
             

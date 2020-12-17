@@ -81,7 +81,7 @@
 </nav> -->
 
 <div style="height: 80vh;">
-  <mat-toolbar style="background: #70b806e3">
+  <mat-toolbar *ngIf="(toolbarService.visible|async)" style="background: #70b806e3">
     <mat-toolbar-row>
       <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>
@@ -103,7 +103,7 @@
             </span>
      </mat-menu>
   
-         
+     <a mat-button *ngIf="user == null || user == undefined" [routerLink]="'/login'">Student Signup</a>
         <a #trigger="matMenuTrigger" (mouseenter)="openMyMenu('trigger')" href="#" [matMenuTriggerFor]="menu2" mat-button>Admission</a>
         
         <mat-menu class="customize" #menu2="matMenu" overlapTrigger="false">

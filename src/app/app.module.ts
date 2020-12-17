@@ -1,8 +1,10 @@
+import {MomentModule} from 'angular2-moment'
+import {NgIdleKeepaliveModule} from '@ng-idle/keepalive'
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, InactivityDialogComponent } from './app.component';
 import { LoginPageComponent } from '../login-page/login-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -56,8 +58,15 @@ import { FacultyCardComponent } from '../faculty/faculty-card/faculty-card.compo
 import { PlayYoutubeVideoComponent } from 'src/home/play-youtube-video/play-youtube-video.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { FtseQuizComponent } from '../ftse-quiz/ftse-quiz.component';
-import { FtseQuizPageComponent } from '../ftse-quiz-page/ftse-quiz-page.component'; @NgModule({
+import { FtseQuizPageComponent } from 'src/ftse-quiz-page/ftse-quiz-page.component';
+import { OverallPerformanceComponent } from 'src/score-card/overall-performance/overall-performance.component';
+ 
+@NgModule({
+ 
+
+
   declarations: [
+    OverallPerformanceComponent,
     AppComponent,
     LoginPageComponent,
     AdminPageComponent,
@@ -82,8 +91,11 @@ import { FtseQuizPageComponent } from '../ftse-quiz-page/ftse-quiz-page.componen
     PlayYoutubeVideoComponent,
     FtseQuizComponent,
     FtseQuizPageComponent,
+      
     ],
   imports: [
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
     MatDialogModule,
     NgxSpinnerModule,
     MatTableModule,
@@ -119,7 +131,7 @@ import { FtseQuizPageComponent } from '../ftse-quiz-page/ftse-quiz-page.componen
     MatProgressSpinnerModule,
       
   ],
-  providers: [{provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher} , LoginGuard ,FormatterPipe ,
+  providers: [ {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher} , LoginGuard ,FormatterPipe ,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorInterceptor,
@@ -131,7 +143,7 @@ import { FtseQuizPageComponent } from '../ftse-quiz-page/ftse-quiz-page.componen
     MatFormFieldModule,
      
   ],
-  entryComponents:[QuestionFormComponent  ],
+  entryComponents:[QuestionFormComponent , AppComponent, InactivityDialogComponent ],
    
 })
 export class AppModule { }

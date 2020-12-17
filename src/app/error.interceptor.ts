@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.router.navigate(['/'])
             }
             else{
-                alert(err.error )
+                alert("Error : We are working on the issue , please navigate to home")
                 this.router.navigate(['/'])
             }
 
