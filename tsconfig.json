@@ -22,7 +22,8 @@
       "dom"
     ],
     "types":[
-      "jquery"
+      "jquery",
+  
     ]
   },
   "angularCompilerOptions": {

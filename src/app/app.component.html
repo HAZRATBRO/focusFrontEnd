@@ -1,92 +1,11 @@
-<!-- <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport 
-        mode='side' >
-      <mat-toolbar>Menu</mat-toolbar>
-      <mat-nav-list>
-         
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        
-      <mat-toolbar color="primary">
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()"
-           >
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-         
-        <button  onMouseOver="this.style.cursor = 'pointer';" onMouseOut="this.style.cursor = 'default';" onclick="location.href = '/dashboard';">Focus Edutech</button>
-          
-      </mat-toolbar>
-      <mat-toolbar color="primary">
-        <span style="font-size: 1vw;">Welcome to Focus Edutech</span>
-
-      </mat-toolbar>
-               
-         
-      
-    </mat-sidenav-content>
-    
-  </mat-sidenav-container> -->
-  <!-- <div class="topnav" id="myTopnav">
-    <a [routerLink]="'/dashboard'" class="active">Home</a>
-     
-    <a *ngFor="let item of menuItems"   [routerLink]="'/'+item"> {{item | titlecase}} </a>
-        
-    <div class="dropdown">
-      <button class="dropbtn">Dropdown 
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
-      </div>
-    </div> 
-    <a href="#about">About</a>
-   </div>
-   -->
-
-<!-- <nav>
-  <ul class="menu">
-    <li class="logo"><img src="./../assets/focusLogo.PNG" /></li>
-    <li class="item"><a [routerLink]="'/'">Home</a></li>
-    <li class="item"><a href="#">About</a></li>
-    <li class="item has-submenu">
-       
-      <ul class="submenu">
-        <li *ngFor="let item of menuItems" class="subitem"><a    [routerLink]="'/'+item"> {{item | titlecase}} </a>
-        </li>
-         
-      </ul>
-    </li>
-     
-     
-    <li class="item"><a href="#">Contact</a>
-    </li>
-    <li *ngIf="user===null" class="item button"><a [routerLink]="'/'">Log In</a></li>
-    <li *ngIf="user===null"class="item button secondary"><a [routerLink]="'/'">Sign Up</a></li>
-    <div *ngIf="user!==null" class="dropdown">
-      <button class="dropbtn"><i class="fa fa-user userThumb" aria-hidden="true"></i>&nbsp;{{user.userName | titlecase}}</button>
-      <div class="dropdown-content">
-        <a [routerLink]="'/updateUser'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit Profile</a>
-        <a (click)="logout()"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Logout</a>
-        <a href="#"><i class="fa fa-puzzle-piece" aria-hidden="true"></i>&nbsp;Activity Log</a>
-      </div>
-    </div>
-  </ul>
-</nav> -->
-
-<div style="height: 80vh;">
+ 
+ <div style="height: 100vh;">
   <mat-toolbar *ngIf="(toolbarService.visible|async)" style="background: #70b806e3">
     <mat-toolbar-row>
       <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>
       </button>
-      <span><img style="width:55%" src="../assets/focusLogo.PNG"></span>
+      <span><img id="logo"  src="../assets/focusLogo.PNG"></span>
       <span class="menu-spacer"></span>
       <div fxShow="true" fxHide.lt-md>
         <a [routerLink]="'/'" mat-button>Home</a> 
@@ -114,18 +33,20 @@
      </mat-menu>
     
 
-        <a href="#" mat-button>Sample Test</a>
+        <a [routerLink]="'/sampleTest'" *ngIf="user !== null && user !== undefined" mat-button>Sample Test</a>
        
         <a [routerLink]="'/contact'" mat-button>Contact Us</a>
 
-        <a #profile="matMenuTrigger" *ngIf="user !== null && user !== undefined" (mouseenter)="openMyMenu('user')" href="#" [matMenuTriggerFor]="menu3" mat-button>Profile</a>
+        <a #profile="matMenuTrigger" style="background:#ff6c24" *ngIf="user !== null && user !== undefined" (mouseenter)="openMyMenu('user')" href="#" [matMenuTriggerFor]="menu3" mat-button><i class="fa fa-user" aria-hidden="true"></i>
+          Welcome {{user.userName}}</a>
         
 
         <mat-menu class="customize" #menu3="matMenu" overlapTrigger="false">
          <span (mouseleave)="closeMyMenu('user')">
           <a class="option" [routerLink]="'/ftseQuiz'" mat-menu-item>Test Dashboard</a>
           <a class="option" [routerLink]="'/score'" mat-menu-item>Results</a>
-          <a class="option" (click)="logout()" mat-menu-item>Logout</a>    
+          <a class="option" (click)="logout()" mat-menu-item>Logout</a>  
+            
            </span>
     </mat-menu>
 
@@ -136,13 +57,16 @@
   <mat-sidenav-container fxFlexFill>
     <mat-sidenav #sidenav>
       <mat-nav-list>
-        <a (click)="sidenav.toggle()" href="" mat-list-item>Close</a>
-        <a [routerLink]="'/'" mat-list-item>Home</a>
-        <a href="#" mat-list-item>Menu Item 2</a>
-        <a href="#" mat-list-item>Menu Item 3</a>
-        <a href="#" mat-list-item>Menu Item 4</a>
-        <a href="#" mat-list-item>Menu Item 5</a>
-        <a href="#"mat-list-item>Menu Item 6</a>
+        <a href="javascript.void(0)" *ngIf="user !== null && user !== undefined" mat-list-item>Welcome ! {{user.userName}}</a>
+        <a class="option" [routerLink]="'/'" mat-list-item>Home</a>
+        <a class="option" [routerLink]="'/contact'" mat-list-item>Contact Us</a>
+        <a class="option" [routerLink]="'/admissions'" mat-list-item>Admission Process</a>
+          <a class="option" [routerLink]="'/faculty'" mat-list-item>Our Faculty</a>
+          <a class="option" [routerLink]="'/sampleTest'" *ngIf="user !== null && user !== undefined" mat-list-item>Sample Test</a>
+       <a class="option" *ngIf="user == null || user == undefined" [routerLink]="'/login'" mat-list-item>Student Login</a>
+        <a class="option" [routerLink]="'/ftseQuiz'" *ngIf="user !== null && user !== undefined" mat-list-item>Test Dashboard</a>
+        <a class="option" (click)="logout()" *ngIf="user !== null && user !== undefined" mat-menu-item>Logout</a>
+         
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content fxFlexFill>
@@ -151,5 +75,5 @@
 
        </mat-sidenav-content>
   </mat-sidenav-container>
+ <ngx-spinner bdColor = "rgb(0,0,0)" size = "default" color = "#f1a20b" type = "ball-clip-rotate-pulse" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 </div>
-<ngx-spinner bdColor = "rgb(0,0,0)" size = "default" color = "#f1a20b" type = "ball-clip-rotate-pulse" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

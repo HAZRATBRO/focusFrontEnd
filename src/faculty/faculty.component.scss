@@ -246,3 +246,41 @@ p:hover{
     transform: none;
   }
 }
+.head{
+  text-transform: capitalize;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 48px;
+  color: #ffffff;
+}
+@media only screen and (max-width:768px) { 
+  .content-box h2{
+    font-size: larger;
+  }
+  
+  .skew-c{
+    display: none;
+  }
+
+  p{
+    font-size: small;
+  }
+  .inner-page-banner-area{
+    padding: 5px 0 52px;
+  }
+  .head{
+    text-transform: capitalize;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: xx-large;
+  color: #ffffff;
+  }
+
+  
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) { 
+  
+
+}

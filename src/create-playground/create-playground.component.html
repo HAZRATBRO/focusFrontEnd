@@ -1,0 +1,143 @@
+ 
+<mat-horizontal-stepper [linear]="false" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out Test Details</ng-template>
+        <mat-form-field>
+          <mat-label>Test Name</mat-label>
+          <input matInput placeholder="Enter Test Name" formControlName="testName" required>
+          <mat-error *ngIf="firstFormGroup.controls.testName.hasError('required')">Required Field</mat-error>
+
+        </mat-form-field><br>
+        <mat-form-field>
+            <mat-label>Number Of Sections</mat-label>
+            <input matInput placeholder="Enter Number of Sections" formControlName="numberOfSections" required>
+            <mat-error *ngIf="firstFormGroup.controls.numberOfSections.hasError('required')">Required Field</mat-error>
+
+        </mat-form-field><br>
+          <mat-form-field>
+            <mat-label>Test Duration</mat-label>
+            <input matInput placeholder="Test Duration(minutes)" formControlName="testDuration" required>
+            <mat-error *ngIf="firstFormGroup.controls.testDuration.hasError('required')">Required Field</mat-error>
+
+        </mat-form-field><br>
+        <mat-form-field>
+          <mat-label>Total Marks</mat-label>
+          <input matInput placeholder="Total Marks" formControlName="totalMarks" required>
+          <mat-error *ngIf="firstFormGroup.controls.testDuration.hasError('required')">Required Field</mat-error>
+
+      </mat-form-field><br>
+          <mat-form-field appearance="fill">
+            <mat-label>Scheduled Date</mat-label>
+            <input matInput placeholder="YYYY-MM-DD" formControlName="validBefore" required>
+            <mat-error *ngIf="firstFormGroup.controls.validBefore.hasError('required')">Required Field</mat-error>
+            <mat-error *ngIf="firstFormGroup.controls.validBefore.status === 'INVALID'">Incorrect Format</mat-error>
+        </mat-form-field>
+        <div>
+          <button (click)="updateSections()" mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Fill Marking Scheme">
+       
+        <mat-form-field>
+          <mat-label>Single Choice Correct</mat-label>
+          <input matInput [(ngModel)]="markingSchema.SingleChoice.fullMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>&nbsp;&nbsp;
+        <mat-form-field>
+          <mat-label>Single Choice Negative</mat-label>
+          <input matInput   [(ngModel)]="markingSchema.SingleChoice.negativeMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Multiple Choice Correct</mat-label>
+          <input matInput [(ngModel)]="markingSchema.MultipleChoice.fullMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>&nbsp;&nbsp;
+        <mat-form-field>
+          <mat-label>Multiple Choice Negative</mat-label>
+          <input matInput [(ngModel)]="markingSchema.MultipleChoice.negativeMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Numerical Type Correct</mat-label>
+          <input matInput [(ngModel)]="markingSchema.NumericalType.fullMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>&nbsp;&nbsp;
+        <mat-form-field>
+          <mat-label>Numerical Type Wrong</mat-label>
+          <input matInput [(ngModel)]="markingSchema.NumericalType.negativeMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>
+         <br>
+         <mat-form-field>
+          <mat-label>Fill In The Blanks Correct</mat-label>
+          <input matInput [(ngModel)]="markingSchema.FillInTheBlanks.fullMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>&nbsp;&nbsp;
+         <mat-form-field>
+          <mat-label>Fill In The Blanks Wrong</mat-label>
+          <input matInput [(ngModel)]="markingSchema.FillInTheBlanks.negativeMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>
+         <br>
+         <mat-form-field>
+          <mat-label>Paragraph Type Correct</mat-label>
+          <input matInput [(ngModel)]="markingSchema.ParagraphType.fullMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>&nbsp;&nbsp;
+         <mat-form-field>
+          <mat-label>Paragraph Type Wrong</mat-label>
+          <input matInput [(ngModel)]="markingSchema.ParagraphType.negativeMarks" placeholder="Enter Number Only"
+                 required>
+         </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+     
+    </mat-step>
+    
+     <mat-step *ngFor="let section of sections; let sectionIndex = index" label="{{section.sectionName}}">
+      <mat-form-field appearance="fill">
+        <mat-label>Section Name</mat-label>
+        <input matInput [(ngModel)]="section.sectionName" placeholder="Enter Section Name"
+               required>
+       </mat-form-field><br>
+       <mat-form-field appearance="fill">
+          <mat-label>Section Marks</mat-label>
+          <input matInput [(ngModel)]="section.sectionMarks" placeholder="Enter Section Marks"
+                 required>
+         </mat-form-field>
+          
+         <div *ngIf="section.questions.length > 0" class="questionContent">
+            
+            <div *ngFor="let question of section.questions" class="questions">
+              <app-question-form [testName]="quizName" [uploadList]="uploadList" [questionData]="question" [sectionName]="section.sectionName"></app-question-form> 
+              <br> </div>
+            </div> 
+             <div class="controls">
+              <button (click)="addQuestion(sectionIndex)" class="bottom-right" mat-mini-fab>
+              <mat-icon class="icon">add</mat-icon>
+            </button>&nbsp;&nbsp;
+            <button (click)="deleteQuestion(sectionIndex)" class="bottom-right" mat-mini-fab>
+              <mat-icon class="icon">delete</mat-icon>
+            </button>
+           
+        </div>
+     </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>&nbsp;&nbsp;
+        <button color="primary" mat-raised-button (click)="uploadTest()">Upload Test</button>&nbsp;&nbsp;
+      <button mat-raised-button color="warn" (click)="exit()">Exit Without Saving</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+   
+  

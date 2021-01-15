@@ -1,0 +1,35 @@
+
+ 
+@media only screen and (max-width: 760px) { 
+    .content-box h2{
+      font-size: larger;
+    }
+    
+    .skew-c{
+      display: none;
+    }
+  
+    p{
+      font-size: small;
+    }
+    .inner-page-banner-area{
+      padding: 5px 0 52px;
+    }
+    .block {
+        display: block;
+    }
+    #arrow_2{
+        width: 154%;
+    margin-left: -11vw;
+    }
+    .block{
+        border-radius: 2vh;
+    }
+    .block .img{
+        border-radius: 2vh;
+    }
+  }
+  
+   .content{
+    padding: 3vw;
+   }

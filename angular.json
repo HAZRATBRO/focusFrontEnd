@@ -32,8 +32,8 @@
               "src/themes.scss"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.js"
-               ]
+               
+            ]
           },
           "configurations": {
             "production": {
@@ -54,12 +54,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumError": "5kb"
                 }
               ]
             }
@@ -96,8 +96,9 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.css"
+              
             ],
-            "scripts": []
+            "scripts": [ ]
           }
         },
         "lint": {
@@ -124,6 +125,10 @@
               "devServerTarget": "coaching-pwa:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }

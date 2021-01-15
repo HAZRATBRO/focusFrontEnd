@@ -29,10 +29,11 @@
          
       </div>
        
-       <div class="white-block" [@inOutAnimation]="'flyIn'" *ngIf="chartSelected==='overall'">  
-        <table class="table table-hover table-responsive">
+       <div class="colour-block" [@inOutAnimation]="'flyIn'" *ngIf="chartSelected==='overall'">  
+        <table class="table table-responsive">
           <thead>
-            <tr>
+            <tr style="background:green ; color:white">
+              <th>Total Score</th>
               <th>Percentage Score</th>
               <th>Accuracy Percentage</th>
               <th>Positive Marks Scored</th>
@@ -42,6 +43,7 @@
           </thead>
           <tbody>
             <tr>
+              <td>{{quizResult.myTotalScore}}</td>
               <td>{{quizResult.percentageScore | number : '1.2-2'}}</td>
               <td>{{quizResult.accuracy | number : '1.2-2'}}</td>
               <td>{{quizResult.positiveMarks}}</td>
@@ -52,9 +54,9 @@
           </tbody>
         </table>
         <br>
-        <table class="table table-hover table-responsive">
+        <table class="table table-responsive">
           <thead>
-          <tr>
+          <tr style="background:green ; color:white">
             <th>Total Attempted</th>
             <th>Correct Attempts</th>
             <th>Wrong Attempts</th>
@@ -71,12 +73,12 @@
         </tbody>
         </table>
       </div>
-      <div style="border-radius: 2vw;"class="white-block" [@inOutAnimation]="'flyIn'" *ngIf="chartSelected=='subjectWise'">
-        <table class="table table-hover table-responsive">
+      <div style="border-radius: 2vw;"class="colour-block" [@inOutAnimation]="'flyIn'" *ngIf="chartSelected=='subjectWise'">
+        <table class="table table-responsive">
           <thead>
             <tr>
-              <th>Parameter Name</th>
-              <th *ngFor="let section of quizResult.sections">{{section.sectionName}}</th>
+              <th style="background:green ; color:white">Parameter Name</th>
+              <th style="background:green ; color:white" *ngFor="let section of quizResult.sections">{{section.sectionName}}</th>
             </tr>
            
           </thead>

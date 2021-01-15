@@ -10,11 +10,12 @@
         </mat-tab-group>
         
         <div >
+          <div>
           <h2>Question No. : {{questionIndex+1}}</h2>
-           
+          <p class="Time"><b>Time left</b>  {{remainingTime | formatter}}  </p>
+        </div>
           <app-question-view class="mat-elevation-z4" (onStateChange)="updateResponses($event)"  [data]="animationData" [questionData]='quizData.sections[sectionIndex].questions[questionIndex]'></app-question-view>
-          <p><b>Time left</b>  {{remainingTime | formatter}}  </p>
-          
+         
           <div class="jumpQuestionSec">
             <ul>
               <li>

@@ -1,41 +1,101 @@
-<div [@EnterLeave]="'flyIn'" class="cover">
-    <mat-card class="admin-card" layout="row" layout-align="center center">
-    <mat-card-header class="header">
-        <mat-card-title layout="row" style="font-size: larger;" layout-align="center center">Welcome to Focus Admin</mat-card-title>
-    
-    </mat-card-header>
-     <mat-card-content >
-        
-         
-        <div>
-            <h2> Existing Question Papers </h2>
-        </div> 
-        <div class="example-button-row"> 
-        <div class="tests" *ngFor="let testSet of testSets"> 
-        <button class="quizBtn" mat-button [matMenuTriggerFor]="menu">{{testSet.testName}}</button>
-           </div>
+<mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Create and Edit Tests">
+         <div class="colour-block">
+            <div class="content">
+                <mat-card class="mat-elevation-z4 mat-card">
+                  <mat-card-header>
+                    <mat-card-title class='title'>Create a New Test</mat-card-title>
+                    
+                  </mat-card-header>
+                  <mat-divider></mat-divider>
+                    <mat-card-content>
+                    <p class="center">
+                        <button (click)="onTestUpdate('new')" class="bottom-right" mat-fab>
+                            <mat-icon class="icon">add</mat-icon>
+                          </button>
+                    </p>
+                  </mat-card-content>
+                   
+                </mat-card>
+              </div>
+         <br>
+         <div class="content">
+            <div fxLayout="row wrap" fxLayoutGap="16px grid">
+              <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let test of testData">
+                <mat-card class="mat-elevation-z4 mat-card" >
+                  <mat-card-header>
+                    <mat-card-title class="title">{{test.testName}}</mat-card-title>
+                  </mat-card-header>
+                  <mat-divider></mat-divider>
+                  <mat-card-content>
+                    <h4>Total Marks : {{test.totalMarks}}</h4>  
+                    <h4>Test Duration : {{test.testDuration}}</h4> 
+                    <h4>Valid Before : {{test.validBefore | date: 'dd/MM/yyyy'}}</h4> 
+                     
+                  </mat-card-content>
+                  <mat-divider></mat-divider>
+                  <mat-card-actions style="display: inline-flex;">
+                    <button color="primary" (click)="onTestUpdate(test.testName)" mat-raised-button>Edit</button>
+                    <button color="warn" mat-raised-button>Delete</button>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+            </div>
+            </div>
         </div>
-     
-            <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-            </mat-menu>
-        
-            <!-- <div class="addQuiz">
-                
-                <button mat-raised-button color="primary"   aria-label="Create a new Quiz">
-                 Create New Quiz
-                </button>
-              </div> -->
-           
-       
-           
-        </mat-card-content>    
-           
-        <mat-card-actions style="margin-top: 45vh;">
-           <button mat-raised-button color="primary" (click)="createNewQuiz()">New Quiz</button>
-           </mat-card-actions>
-    
-    
-        </mat-card>
+    </mat-tab>
+    <mat-tab label="View Test Reports">
+      
+      <div class="center-table">
+      <mat-form-field appearance="fill">
+        <mat-label>Select a Test</mat-label>
+        <mat-select (valueChange)="collectScore($event)" [value]="tableName">
+          <mat-option>None</mat-option>
+         <div *ngFor="let test of testData">
+          <mat-option value="{{test.testName}}">{{test.testName}}</mat-option>
+        </div>
+        </mat-select>
+      </mat-form-field>
     </div>
+    
+    <div class="center-table" *ngFor="let test of testData">
+      <div *ngIf="test.testName === tableName" >
+      <p>  Test Name   : <b>{{test.testName}}</b> </p>  
+      <p> Total Marks : <b>{{test.totalMarks}} </b></p>
+      </div>
+      <table id="excel-table" *ngIf="test.testName === tableName" class="table table-dark table-bordered table-hover myTable">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th *ngFor="let section of test.sections">{{section.sectionName | uppercase}} </th>
+                <th>Total Marks Scored</th> 
+                <th>Rank</th> 
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr *ngFor="let result of tableResult;let i = index">
+              <td>{{result.userName}}</td>
+              <td *ngFor="let sectionData of result.sectionWiseMarks">{{sectionData}}</td>
+              <td>{{result.totalMarks}}</td>
+              <td>{{i+1}}</td>
+            </tr>           
+        </tbody>
+    </table>
+    <br>
+    <button (click)="exportToExcel()" class="btn"><i class="fa fa-download"></i> Export To Excel</button>
+    <br><br><br>
+  </div>
+    </mat-tab>
+    <mat-tab label="View Student Reports">
+      <div class="colour-block">
+      <mat-selection-list class="center-table" (selectionChange)='printList($event)'  #user [multiple]="false">
+        <mat-list-option  *ngFor="let user of userList" [value]="user.userName">
+          {{user.userName | uppercase}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+      <!-- <app-student-data *ngIf="userVal !== ''" [studentName]="userVal"></app-student-data> -->
+    </mat-tab>
+    
+  </mat-tab-group>

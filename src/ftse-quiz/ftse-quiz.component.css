@@ -4,3 +4,23 @@ padding: 2vw;
 border-radius: 1vw;
 color: white;
 }
+.button{
+    background: #70b806e3;
+    color:white;
+    
+}
+@media only screen and (max-width: 760px) {
+table{
+    margin-left: -6vw;
+  }
+  .mat-card{
+    width: 150%;
+margin-left: -15vw;
+  }
+  
+}
+
+.mark{
+  background: #ffbf00;
+color: white;
+}

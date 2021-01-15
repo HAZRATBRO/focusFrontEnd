@@ -1,12 +1,12 @@
-<div class="carousel">
-	<!-- slides -->
+<!-- <div class="carousel">
+	 
 	<ul class="slides">
 		<li class="slide" *ngFor="let slide of slides; let i = index;" [@slideState]="getAnimationSlideState(i)"
 			 >
 			<ng-container *ngTemplateOutlet="slideTemplateRef; context: { $implicit: slide }"> </ng-container>
 		</li>
 	</ul>
-	<!-- navigations & thumbnails -->
+	 
 	<div class="navigations">
 		 
 		<div>
@@ -18,5 +18,72 @@
 		</div>
 		 
 	</div>
-</div>
+</div> -->
+<!-- 
+<ngx-light-carousel [options]="options1" [data]="products" class="wrapper c-accent"
+	style="display: inline;">
+	<section ngx-light-carousel-container class="content">
+		<article ngx-light-carousel-item *ngFor="let product of products; let i = index">
+			<div class="item cursor-pointer">
+				<div class="product">
+					 
+						<img class="w-100" src="{{product.image}}">
+         			 
+						 
+				</div>
+			</div>
+		</article>
+		<ng-template #infiniteContainer></ng-template>
+	</section>
 
+	<ng-template #carouselContent let-product let-i="index">
+		<article>
+			<div class="item cursor-pointer">
+				<div class="product">
+					<a href="{{product.url}}">
+						<img class="w-100" src="{{product.image}}">
+          </a>
+						<div class="text-left mt-2">
+							<h3 class="title mb-1">{{product.title}}</h3>
+							<div class="pricing d-flex">
+								<span class="sale-price text-danger ml-2"
+                *ngIf="product.salePrice">{{product.salePrice | currency}}</span>
+								<span class="original-price"
+                [ngClass]="{'on-sale ml-1': product.salePrice}">{{product.regularPrice | currency}}</span>
+							</div>
+						</div>
+				</div>
+			</div>
+		</article>
+	</ng-template>
+
+	<ng-template #carouselPrev>
+		<div class="click-area">
+		</div>
+	</ng-template>
+	<ng-template #carouselNext>
+		<div class="click-area">
+		</div>
+	</ng-template>
+
+	<ng-template #carouselDot let-model>
+		<div class="ball bg-accent"></div>
+	</ng-template>
+
+	<ng-template #carouselProgress let-progress>
+		<div class="progress"></div>
+	</ng-template>
+
+</ngx-light-carousel>  -->
+
+<carousel [isAnimated]="true">
+	<slide>
+	  <img src="../../assets/carousel_2.jpg" alt="first slide" style="display: block; width: 100%;">
+	</slide>
+	<slide>
+	  <img src="../../assets/carousel_1.JPG" alt="second slide" style="display: block; width: 100%;">
+	</slide>
+	<slide>
+	  <img src="../../assets/carousel_3.jpg" alt="third slide" style="display: block; width: 100%;">
+	</slide>
+  </carousel>

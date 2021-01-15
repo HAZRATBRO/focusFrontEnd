@@ -265,3 +265,22 @@ p:hover{
     transform: none;
   }
 }
+
+@media only screen and (max-width: 760px) { 
+  .content-box h2{
+    font-size: larger;
+  }
+  
+  p{
+    font-size: small;
+  }
+  .inner-page-banner-area{
+    background-size: contain;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) { 
+  
+
+}

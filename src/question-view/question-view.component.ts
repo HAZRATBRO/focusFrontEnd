@@ -83,7 +83,7 @@ export class QuestionViewComponent implements OnInit,OnChanges {
     return true;
   }
   input = String.fromCharCode(e.which);
-  return !!/^[0-9]+(\.[0-9]{1,2})?$/.test(input);
+  return /^\d+(\.\d{1,2})?$/.test(input);
   }
   
   saveResponse(){
@@ -95,13 +95,24 @@ export class QuestionViewComponent implements OnInit,OnChanges {
     console.log(msg)
     if(msg ==='answered' || msg==='mark')
     {
-      this.questionData.style = msg
+      if(msg === 'answered'){
+        if(this.questionData.response.input === '' && this.questionData.response.checkBox.length ===0){
+          this.questionData.style = 'notAnswered'
+        }
+        else{this.questionData.style = msg}
+        
+      }
+     else{ 
+      console.log(this.questionData.style+"Marking test")
+       this.questionData.style = msg
+      }
        this.onStateChange.emit(msg)
     }
 
     else if(msg === 'clear'){
+      this.questionData.style = 'notAnswered'
      this.questionData.response.input=''
-     this.questionData.response.checkBox = {A:false , B:false , C:false , D:false}  
+     this.questionData.response.checkBox = []  
     }
     
   }

@@ -21,10 +21,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import { AdminPageComponent } from 'src/admin-page/admin-page.component';
 import {MatMenuModule} from '@angular/material/menu';
-import { CreateQuizComponent } from '../create-quiz/create-quiz.component'; 
-import {MatStepperModule} from '@angular/material/stepper';
-import { QuestionFormComponent } from '../question-form/question-form.component'; 
-import {MatExpansionModule} from '@angular/material/expansion';
+ import {MatStepperModule} from '@angular/material/stepper';
+ import {MatExpansionModule} from '@angular/material/expansion';
 import { QuizPageComponent } from '../quiz-page/quiz-page.component'; 
 import {MatRadioModule} from '@angular/material/radio';
 import { QuestionViewComponent } from '../question-view/question-view.component'; 
@@ -33,24 +31,17 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatGridListModule} from '@angular/material/grid-list'; 
 import {MatTabsModule} from '@angular/material/tabs'; 
 import {MatCheckboxModule} from '@angular/material/checkbox'; 
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { FormatterPipe } from '../pipes/formatter.pipe';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { QuizDashboardComponent } from '../quiz-dashboard/quiz-dashboard.component';    
+ import { FormatterPipe } from '../pipes/formatter.pipe';
+  import { QuizDashboardComponent } from '../quiz-dashboard/quiz-dashboard.component';    
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeComponent } from '../home/home.component';
 import { LoginGuard } from './login.guard';
 import { ErrorInterceptor } from './error.interceptor';
 import { IntroPageComponent } from '../intro-page/intro-page.component';
 import { ScoreCardComponent } from 'src/score-card/score-card.component';
-import { FocusChartComponent } from 'src/focus-chart/focus-chart.component';
-import { NgxSpinnerModule } from "ngx-spinner";
-import {MatTableModule} from '@angular/material/table';
-import { CarouselComponent } from '../home/carousel/carousel.component';
-import { AboutUsComponent } from '../about-us/about-us.component';
-import { FacultyComponent } from '../faculty/faculty.component';
+ import { NgxSpinnerModule } from "ngx-spinner";
+ import { CarouselComponent } from '../home/carousel/carousel.component';
+ import { FacultyComponent } from '../faculty/faculty.component';
 import { AdmissionsComponent } from '../admissions/admissions.component';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -58,32 +49,33 @@ import { FacultyCardComponent } from '../faculty/faculty-card/faculty-card.compo
 import { PlayYoutubeVideoComponent } from 'src/home/play-youtube-video/play-youtube-video.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { FtseQuizComponent } from '../ftse-quiz/ftse-quiz.component';
-import { FtseQuizPageComponent } from 'src/ftse-quiz-page/ftse-quiz-page.component';
-import { OverallPerformanceComponent } from 'src/score-card/overall-performance/overall-performance.component';
- 
-@NgModule({
+ import { FtseQuizPageComponent } from 'src/ftse-quiz-page/ftse-quiz-page.component';
+ import { NgxCarouselModule } from 'ngx-light-carousel'
+ import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { SampleQuizComponent } from '../sample-quiz/sample-quiz.component';
+import { CreatePlaygroundComponent } from '../create-playground/create-playground.component';
+ import { QuestionFormComponent } from 'src/create-playground/question-form/question-form.component';
+ import { StudentDataComponent } from '../student-data/student-data.component';
+import { AdminLoginComponent } from '../admin-login/admin-login.component'; 
+import { AdminGuard } from './admin.gaurd';
+  @NgModule({
  
 
 
   declarations: [
-    OverallPerformanceComponent,
+    
     AppComponent,
     LoginPageComponent,
     AdminPageComponent,
-    CreateQuizComponent,
-    QuestionFormComponent,
     QuizPageComponent,
     QuestionViewComponent,
     FormatterPipe,
-    DashboardComponent,
-    QuizDashboardComponent,
+     QuizDashboardComponent,
     HomeComponent,
     IntroPageComponent,
     ScoreCardComponent,
-    FocusChartComponent,
     CarouselComponent,
-    AboutUsComponent,
-    FacultyComponent,
+     FacultyComponent,
     AdmissionsComponent,
     ContactUsComponent,
     FooterComponent,
@@ -91,16 +83,21 @@ import { OverallPerformanceComponent } from 'src/score-card/overall-performance/
     PlayYoutubeVideoComponent,
     FtseQuizComponent,
     FtseQuizPageComponent,
-      
-    ],
+    SampleQuizComponent,
+    CreatePlaygroundComponent,
+     QuestionFormComponent,
+     StudentDataComponent,
+     AdminLoginComponent,
+     ],
   imports: [
+     CarouselModule,
+    NgxCarouselModule,
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
     MatDialogModule,
     NgxSpinnerModule,
-    MatTableModule,
-    FlexLayoutModule,
-    MatChipsModule, 
+     FlexLayoutModule,
+    MatListModule, 
     ChartsModule ,
     MatTabsModule,
     BrowserModule,
@@ -111,12 +108,10 @@ import { OverallPerformanceComponent } from 'src/score-card/overall-performance/
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule,
-    HttpClientModule,
+     HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
-    MatOptionModule,
-    MatCardModule,
+     MatCardModule,
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
@@ -125,13 +120,11 @@ import { OverallPerformanceComponent } from 'src/score-card/overall-performance/
     MatExpansionModule,
     MatRadioModule,
     MatCheckboxModule,
-    ScrollingModule,
-    MatGridListModule,
+     MatGridListModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule,
-      
+       
   ],
-  providers: [ {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher} , LoginGuard ,FormatterPipe ,
+  providers: [ {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},AdminGuard , LoginGuard ,FormatterPipe ,
   {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorInterceptor,
@@ -143,7 +136,7 @@ import { OverallPerformanceComponent } from 'src/score-card/overall-performance/
     MatFormFieldModule,
      
   ],
-  entryComponents:[QuestionFormComponent , AppComponent, InactivityDialogComponent ],
-   
+  entryComponents:[ AppComponent, InactivityDialogComponent ],
+  schemas: []
 })
 export class AppModule { }

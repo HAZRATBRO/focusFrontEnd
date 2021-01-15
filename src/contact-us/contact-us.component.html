@@ -34,7 +34,9 @@
   <div class="flex">
     <textarea placeholder="Message" rows="1" required></textarea>
   </div>
-  <button>Send</button>
+  <button (click)="showThanks=true">Send</button>
+  <br><br>
+  <p class="response" *ngIf="showThanks"><b>Your response Has been Recorded</b></p>
 </form>
 </div>
 </div>

@@ -63,7 +63,7 @@ export class ScoreCardComponent implements OnInit {
 // ], labels:['Section1','Section2','Section3']}}
   
   user:any
-  testName:any = "Focus Chemistry DPP"
+  testName:any 
   quizResult:any
   myTotalScore:any = 0
   totalAttempted:any = 0
@@ -76,11 +76,11 @@ export class ScoreCardComponent implements OnInit {
   {
       }
   ngOnInit(): void {
-//     this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(params => {
            
-//     this.testName = params.msg  
-//     console.log(params)
-// }); 
+    this.testName = params.msg  
+     
+}); 
 
 this.service.currentUser.subscribe((data)=>{
   this.user = data
@@ -92,7 +92,7 @@ this.service.currentUser.subscribe((data)=>{
       this.quizResult = data[0]
       console.log(data[0])
       this.calculateStats()
-         })
+  })
    
 
   }
@@ -136,13 +136,15 @@ this.service.currentUser.subscribe((data)=>{
           this.quizResult.negativeMarks += question.marksAwarded
           this.quizResult.wrongAttempt += 1
           section.wrongAttempt +=1
+          
          }
         else if(question.marksAwarded > 0){
           this.quizResult.correctAttempt+=1
           section.correctAttempt+=1
           this.quizResult.positiveMarks += question.marksAwarded
+           
          }
-          else{
+          else if(question.marksAwarded === 0){
             if(question.type !== 'SingleChoice' || question.type !== 'MultipleChoice') {
             if (question.response.input ==='' && question.response.checkBox.length === 0){
               //unattempted
@@ -151,6 +153,7 @@ this.service.currentUser.subscribe((data)=>{
             }
             else{
               //wrongAnswer
+               
               this.quizResult.wrongAttempt += 1
               section.wrongAttempt +=1
             }
@@ -161,18 +164,22 @@ this.service.currentUser.subscribe((data)=>{
           }
         } 
           this.quizResult.myTotalScore+=question.marksAwarded
-          this.quizResult.attemptedCount += 1
           section.marksScored += question.marksAwarded
           section.attemptedCount+=1
       });
-      section.timeSpent = Math.floor(section.timeSpent/60)
-      this.quizResult.timeTaken += section.timeSpent
-      section.accuracy=(section.correctAttempt/section.attemptedCount)*100
-      section.percentageScore = (section.marksScored/section.sectionMarks)*100
-   });
-   this.quizResult.accuracy = (this.quizResult.correctAttempt/this.quizResult.attemptedCount)*100
-   this.quizResult.percentageScore = (this.quizResult.myTotalScore/this.quizResult.totalMarks)*100
-  //  this.setData('overall')
+
+          section.timeSpent = Math.floor(section.timeSpent/60)
+          this.quizResult.timeTaken += section.timeSpent
+          section.attemptedCount = (section.correctAttempt + section.wrongAttempt)
+          section.accuracy=(section.attemptedCount === 0)? 0:((section.correctAttempt/section.attemptedCount)*100)
+          section.percentageScore =  ((section.marksScored/section.sectionMarks)*100)
+          console.log(section.sectionName + " accuracy " + section.accuracy + " percentage " + section.percentageScore)
+          });
+      console.log(this.quizResult.myTotalScore)
+      this.quizResult.attemptedCount = this.quizResult.wrongAttempt + this.quizResult.correctAttempt
+      this.quizResult.accuracy =(this.quizResult.attemptedCount===0)? 0 : (this.quizResult.correctAttempt/this.quizResult.attemptedCount)*100
+      this.quizResult.percentageScore =  ((this.quizResult.myTotalScore/this.quizResult.totalMarks)*100)
+      //  this.setData('overall')
     
   }
 

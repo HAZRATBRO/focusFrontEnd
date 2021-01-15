@@ -36,7 +36,7 @@ timedOut = false;
 lastPing?: Date = undefined;
  
 
-  title = 'coaching-pwa';
+  title = 'Focus Classes Pvt Ltd';
   user:any 
   public compLoad:string = "login"
  
@@ -50,26 +50,28 @@ lastPing?: Date = undefined;
     
 
   ngOnInit(): void {
-    console.log(this.user)
+    // console.log(this.user)
      
     this.service.currentUser.subscribe((data)=>{
       this.user = data
     })
   }
   ngOnChanges(changes: SimpleChanges): void {
-     console.log(this.service.userToken)
+    //  console.log(this.service.userToken)
   }
   
   changeCard(msg:string){
     this.compLoad=msg;
-    console.log(this.compLoad)
+    // console.log(this.compLoad)
   }
 
   logout(){
     this.service.logout()
     this.spinner.show()
-     
-      this.router.navigate(['/'])
+    setTimeout(()=>{
+      this.router.navigate(['/']) 
+      this.spinner.hide() 
+    },2000)
     
      
 }
@@ -109,7 +111,7 @@ constructor(public toolbarService:ToolbarService ,public dialog:MatDialog ,priva
     }) 
   
     // sets an idle timeout of 5 seconds, for testing purposes.
-  idle.setIdle(3600);
+  idle.setIdle(7200);
   
   
   // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
@@ -121,7 +123,7 @@ constructor(public toolbarService:ToolbarService ,public dialog:MatDialog ,priva
 
   idle.onIdleEnd.subscribe(() => { 
     this.idleState = 'No longer idle.'
-    console.log(this.idleState);
+    // console.log(this.idleState);
     this.reset();
   });
   
@@ -130,19 +132,19 @@ constructor(public toolbarService:ToolbarService ,public dialog:MatDialog ,priva
     this.idleState = 'Timed out!';
     this.timedOut = true;
     this.dialog.closeAll()
-    console.log(this.idleState);
+    // console.log(this.idleState);
      this.logout()
   });
   
   idle.onIdleStart.subscribe(() => {
       this.idleState = 'You\'ve gone idle!'
-      console.log(this.idleState);
+      // console.log(this.idleState);
       this.dialog.open(InactivityDialogComponent);
   });
   
   idle.onTimeoutWarning.subscribe((countdown: number) => {
     this.idleState = 'You will be logged out in ' + countdown + ' seconds!'
-    console.log(this.idleState);
+    // console.log(this.idleState);
   });
 
   // sets the ping interval to 15 seconds
@@ -151,7 +153,7 @@ constructor(public toolbarService:ToolbarService ,public dialog:MatDialog ,priva
   keepalive.onPing.subscribe(() => this.lastPing = new Date());
 
   this.service.currentUser.subscribe((user: any) => {
-    console.log(user)
+    // console.log(user)
     if (user) {
       idle.watch()
       this.timedOut = false;
@@ -170,18 +172,18 @@ reset() {
 }
  
 stay() {
-  console.log("Triggered")
+  // console.log("Triggered")
   this.dialog.closeAll();
   this.reset();
 }
 
 openDialog() {
-  console.log(this.idleState)
+  // console.log(this.idleState)
   const dialogRef = this.dialog.open(InactivityDialogComponent  );
 
 
   dialogRef.afterClosed().subscribe((result)=>{
-    console.log(result)
+    // console.log(result)
     if(result === "stay"){
       this.stay()
     }
@@ -205,7 +207,7 @@ export class InactivityDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 close(msg:string){
-  console.log(msg)
+  // console.log(msg)
   this.dialogRef.close(msg)
 }
 }

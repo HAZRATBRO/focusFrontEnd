@@ -3,15 +3,17 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { SupportService } from 'src/services/support.service';
+import { ToolbarService } from 'src/services/toolbar.service';
 import {verifyToken} from '../functions' 
 import {parseJwt} from '../functions'
 @Injectable({providedIn:'root'})
 export class LoginGuard implements CanActivate {
     currentUser:any
-        constructor(private spinner:NgxSpinnerService, private service:SupportService, protected router: Router) {
+        constructor(private toolbarService:ToolbarService ,private spinner:NgxSpinnerService, private service:SupportService, protected router: Router) {
             this.service.currentUser.subscribe((data)=>{
                 this.currentUser = data
             })
+        
          }
     // dummyFunction(){
     //     this.router.events.subscribe((event: Event) => {
@@ -64,15 +66,17 @@ export class LoginGuard implements CanActivate {
     //         }
     //       });
     // }
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :  Promise<boolean>{
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ) :  Promise<boolean>{
         let t = new Promise<boolean>((resolve , reject)=>{
-            setTimeout(()=>{ this.spinner.hide() ; resolve(true)} , 2000)
+            setTimeout(()=>{ this.spinner.hide();this.toolbarService.show() ; resolve(true)} , 2000)
         })  
         let f = new Promise<boolean>((resolve , reject)=>{
-            setTimeout(()=>{ this.spinner.hide() ;resolve(false)} , 2000)
+            setTimeout(()=>{ this.spinner.hide();this.toolbarService.show() ;resolve(false)} , 2000)
         }) 
         
-        let passWithoutVerify = ['','faculty','admissions','contact','login','about']
+    //    console.log("In")
+
+        let passWithoutVerify = [' ','/','faculty','admissions','contact','login','about']
         if(passWithoutVerify.includes(route.url.toString()))
         {
              
@@ -82,8 +86,9 @@ export class LoginGuard implements CanActivate {
                     if(verifyToken(this.currentUser.token))
                         {setTimeout(()=>{
                             this.spinner.hide()
+                            this.toolbarService.show();
                             this.router.navigate(['/ftseQuiz'])
-                        } , 3000)}
+                        } , 2000)}
                 }
             }
              return t;
@@ -104,13 +109,16 @@ export class LoginGuard implements CanActivate {
                 
                     console.log('Routing to login' + error)   
                     //not logged in so redirect to login page
+                    this.toolbarService.show()
                     this.router.navigate(['/'])
                     return f;
                  
             }
             this.spinner.hide()
             console.log('Routing to login')   
+
             //not logged in so redirect to login page
+            this.toolbarService.show()
             this.router.navigate(['/'])
             return f;
         

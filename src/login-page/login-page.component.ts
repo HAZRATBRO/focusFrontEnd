@@ -1,19 +1,47 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, ValidatorFn, Validators } from '@angular/forms';
  import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { User } from 'src/models/user';
 import { SupportService } from 'src/services/support.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+  
  
+/** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form:  NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
+  isErrorState(control: FormControl ): boolean {
+     
+    if (control && control.invalid 
+        && (control.touched )) {
+      return true;
+    } else {
+      console.log(this.checkUsernameValid(control.value))
+      control.setErrors({'incorrect': true})
+      return !this.checkUsernameValid(control.value);
+    }
+  }
+
+ 
+
+  checkUsernameValid(val:string):boolean{
+    
+    if(val.length !== 6)
+        {
+          return false;
+        }
+    else{
+        if(val.slice(0,3) ==="21B" && (parseInt(val.slice(3))!== NaN && (parseInt(val.slice(3)) >= 1 && parseInt(val.slice(3)) <= 300)) ){
+          return true
+        }
+        
+    }
+    return false;
+  }
+
+
+}
 
 @Component({
   selector: 'app-login-page',
@@ -32,25 +60,28 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     ])
   ]
 })
-export class LoginPageComponent implements OnInit , OnDestroy{
+export class LoginPageComponent implements OnInit  {
 
   @Output() switch = new EventEmitter<string>();
 
-  loading = false;
   
+  loading = false;
+  errorStateMatcher: ErrorStateMatcher = new MyErrorStateMatcher();
 
-  loginGroup:any;
-  signupGroup:any;
+  loginGroup:FormGroup;
+  signupGroup:FormGroup;
   signup:boolean = false
   matcher = new MyErrorStateMatcher();
   errResponse:string = '' 
    constructor(private spinner:NgxSpinnerService,   private router: Router ,private service:SupportService, private _formBuilder: FormBuilder) {
      
     }
-  ngOnDestroy(): void {
+  
      
-  }
-    
+    toggle(event:any){
+       this.signup = false
+    }  
+   
   
 
   ngOnInit(): void {
@@ -65,6 +96,7 @@ export class LoginPageComponent implements OnInit , OnDestroy{
         username :new FormControl('', [
           Validators.required,
           Validators.nullValidator,
+           
         ]) 
 
      }
@@ -112,8 +144,9 @@ export class LoginPageComponent implements OnInit , OnDestroy{
           this.errResponse = data.errors
         }
         else{
+
+          this.router.navigate(['/'])
            
-          this.router.navigate(['/ftseQuiz'])
         }
       })
 
@@ -123,20 +156,18 @@ export class LoginPageComponent implements OnInit , OnDestroy{
   
 
   submitSignin(){
-    if(this.loginGroup.errors === null){
+     
+    if(this.loginGroup.valid === true){
       //we have a valid submission
       let user = {"username":this.loginGroup.controls.username.value ,"password" :this.loginGroup.controls.pass.value }      
       this.service.signIn(user).subscribe((data)=>{
+         
         if(data.hasOwnProperty("errors")){
           this.errResponse = data.errors
         }
         else{
           // localStorage.setItem("userToken" , data.token)
           this.router.navigate(['/ftseQuiz'])
-
-           
-          
-          
         }
       })
     }

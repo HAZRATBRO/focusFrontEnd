@@ -40,6 +40,7 @@
     <mat-radio-group [(ngModel)]="agreed">  
       <mat-radio-button [value]="true">I Agree</mat-radio-button>&nbsp;&nbsp;
       <mat-radio-button [value]="false">Disgree</mat-radio-button>
+ 
    </mat-radio-group>
 &nbsp;&nbsp;
    <button (click)='routeTest("ftse",testName)' *ngIf="agreed" color="primary" mat-raised-button>Proceed To Test</button>

@@ -1,0 +1,32 @@
+<div class="colour-block"> 
+<mat-card>
+<mat-card-title>Welcome to Focus Edutech</mat-card-title><br>
+ <mat-card-content >
+   <div >
+    <form [formGroup]='loginGroup'>
+      <p>
+      <mat-form-field >
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
+         
+        
+        <mat-error *ngIf="loginGroup.controls.username.hasError('required')">
+          Username is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="pass" >
+        <mat-error *ngIf="loginGroup.controls.pass.hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="loginGroup.controls.pass.hasError('minlength')">Password must have at least 8 characters</mat-error>
+      </mat-form-field> 
+    </p>
+    <div class="button">
+     <button (click)="submitSignin()" mat-raised-button color="primary" >Login</button>
+    </div>
+      </form> 
+    </div>
+   </mat-card-content>
+   </mat-card>
+   </div> 

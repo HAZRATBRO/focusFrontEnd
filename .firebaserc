@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "focus-edutech"
+  },
+  "targets": {
+    "focus-edutech": {
+      "hosting": {
+        "coaching-pwa": [
+          "focus-edutech"
+        ]
+      }
+    }
+  }
+}

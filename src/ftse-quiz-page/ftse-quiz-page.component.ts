@@ -1,4 +1,5 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { PlatformLocation } from '@angular/common';
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +10,7 @@ import { ToolbarService } from 'src/services/toolbar.service';
 @Component({
   selector: 'app-ftse-quiz-page',
   templateUrl: './ftse-quiz-page.component.html',
-  styleUrls: ['./ftse-quiz-page.component.css','../quiz-page/quiz-page.component.css']
+  styleUrls: ['./ftse-quiz-page.component.css']
   ,
   animations:[
     trigger('EnterLeave', [
@@ -44,32 +45,26 @@ export class FtseQuizPageComponent implements OnInit {
  
  cheatingCount:any = 0 
  
- @HostListener('window:visibilitychange' , ['$event'])
- cheating(event:any){
-   !document.hidden?(this.cheatingCount+=1):'Hey'
-   if(this.cheatingCount <= 1){
-     alert("Your result will be submitted if you redirect again")
-   }
-   else {
-     this.submitForced()
-   }
- }
+//  @HostListener('document:visibilitychange' , ['$event'])
+//  cheating(event:any){
+//    console.log(event)
+//    if(event.originalTarget.URL.split('/').includes(this.quizName)){
+//      !document.hidden?(this.cheatingCount+=1):'Hey'
+//       if(this.cheatingCount <= 2){
+//         alert("Your result will be submitted if you redirect again")
+//       }
+//       else {
+//         this.submitForced()
+//       }
+//  }
+// }
+//  @HostListener('window:beforeunload' , ['$event'])
+//  cheatCheck(event:any){
+//     localStorage.setItem("cheatingCount",this.cheatingCount)
+//     console.log(this.cheatingCount)
+//  }
  
- @HostListener('window:beforeunload' , ['$event'])
- cheatCheck(event:any){
-    localStorage.setItem("cheatingCount",this.cheatingCount)
-    console.log(this.cheatingCount)
- }
- 
- //event listeners to block source view
- @HostListener('onkeydown',['$event']) 
-keydown (event:any) {
-  event = (event || window.event);
-  if (event.keyCode == 123) {
-  return false;
-  }
-  return true
-}
+  
 
 //event listener for detecting tab changes if any for warning
  
@@ -83,9 +78,9 @@ keydown (event:any) {
 
     const charCode = e.which ? e.which : e.keyCode;
      if (e.ctrlKey && e.ctrlKey) {
-       console.log("found")
+      //  console.log("found")
        return false};
-    console.log(charCode);
+     console.log(charCode);
     if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode < 96 || charCode > 105) {
       return false;
     }
@@ -97,34 +92,41 @@ keydown (event:any) {
    event.preventDefault();
  }
 
- constructor(private toolbarService:ToolbarService ,private spinner:NgxSpinnerService,  private route:ActivatedRoute ,private router:Router ,private service:SupportService) {
-        
+
+
+
+ constructor( private toolbarService:ToolbarService ,private spinner:NgxSpinnerService,  private route:ActivatedRoute ,private router:Router ,private service:SupportService) {
+      //  this.location.onPopState(() => {
+      //    private location: PlatformLocation console.log("Triggered")
+      //   this.toolbarService.show();
+      //     this.router.navigate([this.location.getBaseHrefFromDOM()]) 
+      //   }); 
   }
    
  
  ngOnInit(): void {
   
-  this.toolbarService.hide();
+      this.toolbarService.hide();
 
-  this.cheatingCount = localStorage.getItem("cheatingCount") == null ? 0:parseInt(localStorage.getItem("cheatingCount")||'0')  
+      // this.cheatingCount = localStorage.getItem("cheatingCount") == null ? 0:parseInt(localStorage.getItem("cheatingCount")||'0')  
 
-  this.elem = document.documentElement
- 
-  this.service.currentUser.subscribe((data: any)=>{
-    this.user = data
-  }) 
- this.registerDOMEvents()
- //get Test details first and then load the test 
- 
- this.route.queryParams.subscribe((params) => {
+      this.elem = document.documentElement
     
- this.quizName = params.msg
- });
+      this.service.currentUser.subscribe((data: any)=>{
+        this.user = data
+      }) 
+    this.registerDOMEvents()
+    //get Test details first and then load the test 
+    
+    this.route.queryParams.subscribe((params) => {
+        
+    this.quizName = params.msg
+    });
 
- let str = localStorage.getItem(this.quizName) !== null?localStorage.getItem(this.quizName):'{}'
+    let str = localStorage.getItem(this.quizName) !== null?localStorage.getItem(this.quizName):'{}'
 
- let data:any = JSON.parse(str||'')
- console.log(data)
+    let data:any = JSON.parse(str||'')
+    // console.log(data)
   if(!( Object.keys(data).length === 0 && data.constructor === Object)  &&  Date.parse(data.expireTime) > Date.now()){
     
      console.log("Restored ... ") 
@@ -139,10 +141,10 @@ keydown (event:any) {
   
 
   else{
-   this.service.getFTSEQuiz().subscribe((data: any)=>{
+   this.service.getFTSEQuiz(this.quizName).subscribe((data: any)=>{
        
      this.quizData = data
-     console.log(this.quizData) 
+    //  console.log(this.quizData) 
      this.remainingTime = (this.quizData.testDuration * 60)
      for(let i = 0 ; i < this.quizData.sections.length ; i++){
        this.quizData.sections[i].timeSpent = 0
@@ -165,30 +167,31 @@ keydown (event:any) {
 }
 
 beforeUnload(){
-console.log("On Destroy hook triggered")
-if(this.remainingTime > 0){
-  this.saveSessionData()
- 
-}
+  // console.log("On Destroy hook triggered")
+  this.toolbarService.show();
+  if(this.remainingTime > 0){
+    this.saveSessionData()
+  
+  }
 }
 
  
 saveSessionData(){
-let x = JSON.parse(localStorage.getItem('savedQuizzes') || '[]') 
+      let x = JSON.parse(localStorage.getItem('savedQuizzes') || '[]') 
 
-if (!x.includes(this.quizName))
-  x.push(this.quizName)
+      if (!x.includes(this.quizName))
+        x.push(this.quizName)
 
-localStorage.setItem('savedQuizzes' , JSON.stringify(x))
-let data:any = {}
-data.remainingTime = this.remainingTime
-data.quizData = this.quizData
-data.qInd = this.questionIndex
-data.sec  = this.sectionIndex
-let d1 = new Date(Date.now())
-d1.setHours(d1.getHours()+1)
-data.expireTime = d1
-localStorage.setItem(this.quizName , JSON.stringify(data))
+      localStorage.setItem('savedQuizzes' , JSON.stringify(x))
+      let data:any = {}
+      data.remainingTime = this.remainingTime
+      data.quizData = this.quizData
+      data.qInd = this.questionIndex
+      data.sec  = this.sectionIndex
+      let d1 = new Date(Date.now())
+      d1.setHours(d1.getHours()+2)
+      data.expireTime = d1
+      localStorage.setItem(this.quizName , JSON.stringify(data))
 }
 
 registerDOMEvents() {
@@ -196,7 +199,8 @@ window.addEventListener('beforeunload',this.beforeUnload);
  }
 
 submitTest(){
- alert("Are you sure you wish to submit the test")
+   var response = window.confirm("Are you sure you wish to submit the test");
+   if(response === true){
       let data = this.quizData
       data.sections.forEach((element: any) => {
         element.questions.forEach((x: any) => {
@@ -218,12 +222,16 @@ submitTest(){
         setTimeout(()=>{
           this.spinner.hide()
           this.toolbarService.show()
-          this.router.navigate(['/ftse'])
+          this.router.navigate(['/ftseQuiz'])
          
         },3000)
            
        })
-   
+     
+      }else{
+        return
+      }
+
 }
 submitForced(){
         let data = this.quizData
@@ -236,7 +244,7 @@ submitForced(){
        });
          //stopTheTest
          data.isComplete = true
-         console.log(data)
+        //  console.log(data)
          localStorage.removeItem(this.quizName)
          window.removeEventListener('beforeunload' , this.beforeUnload)
          this.service.uploadQuiz(data, this.user.token).subscribe((data: any) =>{
@@ -246,7 +254,7 @@ submitForced(){
          setTimeout(()=>{
            this.spinner.hide()
            this.toolbarService.show()
-           this.router.navigate(['/ftse'])
+           this.router.navigate(['/ftseQuiz'])
           
          },3000)
             
@@ -257,14 +265,27 @@ changeQuestion(i:number, j:number){
   // let element:HTMLElement = document.getElementById("section_"+i) as HTMLElement;
   // console.log(element)
   // console.log("Changing . . . ")
-  console.log(i , j)
+  // console.log(i , j)
   if(j < this.quizData.sections[this.sectionIndex].questions.length && i < this.quizData.sections.length){
+    
+    
+      if(this.quizData.sections[this.sectionIndex].questions[this.questionIndex].response.input === '' && this.quizData.sections[this.sectionIndex].questions[this.questionIndex].response.checkBox.length === 0){
+        if(this.quizData.sections[this.sectionIndex].questions[this.questionIndex].style !== 'mark'){ 
+          this.quizData.sections[this.sectionIndex].questions[this.questionIndex].style = 'notAnswered'
+      }
+      }
+    else{
+      if(this.quizData.sections[this.sectionIndex].questions[this.questionIndex].style !== 'mark'){
+      this.quizData.sections[this.sectionIndex].questions[this.questionIndex].style = 'answered'
+    }
+  }
       this.questionIndex = j
     this.sectionIndex = i
     // console.log(j)
     // console.log(this.quizData.sections[i].questions[j])
     this.animationData = !this.animationData
-  }
+  
+}
   else if(j >= this.quizData.sections[this.sectionIndex].questions.length && i < this.quizData.sections.length - 1){
     this.questionIndex = 0
     this.sectionIndex = i+1
@@ -275,7 +296,7 @@ changeQuestion(i:number, j:number){
 updateResponses(event:any){
 // this.quizData.sections[this.sec].questions[this.qInd].response = event
 // console.log(this.quizData.sections[this.sec].questions[this.qInd])
-console.log(event)
+// console.log(event)
 if(event === "answered" || event === "mark")
 {
    
@@ -340,7 +361,7 @@ navigateToSubmit() {
           setTimeout(()=>{
             this.spinner.hide()
             this.toolbarService.show()
-            this.router.navigate(['/ftse'])
+            this.router.navigate(['/ftseQuiz'])
            
           },3000)
              

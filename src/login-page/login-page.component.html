@@ -1,15 +1,14 @@
  <div class="skew-c"></div>
 <div class="colour-block"> 
 <mat-card>
-
-    <mat-card-title>Welcome to Focus Edutech</mat-card-title><br>
+<mat-card-title>Welcome to Focus Edutech</mat-card-title><br>
  <mat-card-content >
    <div *ngIf="signup===false" >
     <form [formGroup]='loginGroup'>
       <p>
       <mat-form-field >
         <mat-label>Username</mat-label>
-        <input matInput formControlName="username">
+        <input matInput   formControlName="username">
          
         
         <mat-error *ngIf="loginGroup.controls.username.hasError('required')">
@@ -25,7 +24,7 @@
       </mat-form-field> 
     </p>
     <div class="button">
-      <mat-checkbox id="check1"  [ngModelOptions]="{standalone: true}" *ngIf="signup===false" [(ngModel)]="signup">Signup For FTSE</mat-checkbox> &nbsp;&nbsp;&nbsp;
+      <mat-checkbox id="check1"  [ngModelOptions]="{standalone: true}" *ngIf="signup===false" [(ngModel)]="signup">New User ? Signup Now</mat-checkbox> &nbsp;&nbsp;&nbsp;
       <button *ngIf="signup===false"  (click)="submitSignin()" mat-raised-button color="primary" >Login</button>
     </div>
       </form> 
@@ -35,10 +34,10 @@
         <p>
         <mat-form-field >
             <mat-label>Email</mat-label>
-            <input type="email" matInput formControlName="emailFormControl" [errorStateMatcher]="matcher"
+            <input type="email" matInput formControlName="emailFormControl"  
                    placeholder="Ex. pat@example.com">
              
-            <mat-error *ngIf="signupGroup.controls.emailFormControl.hasError('email') && !loginGroup.controls.emailFormControl.hasError('required')">
+            <mat-error *ngIf="signupGroup.controls.emailFormControl.hasError('email') && !signupGroup.controls.emailFormControl.hasError('required')">
               Please enter a valid email address
             </mat-error>
             <mat-error *ngIf="signupGroup.controls.emailFormControl.hasError('required')">
@@ -48,7 +47,8 @@
         </p>
         <p>
           <mat-form-field>
-            <input type="text" maxlength="10" (keypress)="validate($event)" matInput formControlName="phoneNumber" [errorStateMatcher]="matcher"
+            <mat-label>Phone Number</mat-label>
+            <input type="text" maxlength="10" (keypress)="validate($event)" matInput formControlName="phoneNumber"  
             placeholder="Ex. 9999999990">
             <mat-error *ngIf="signupGroup.controls.phoneNumber.hasError('required')">
              Phone Number is<strong>required</strong>
@@ -61,7 +61,7 @@
         <p>
         <mat-form-field >
             <mat-label>Username</mat-label>
-            <input matInput formControlName="userName">
+            <input  matInput formControlName="userName">
              
             
             <mat-error *ngIf="signupGroup.controls.userName.hasError('required')">
@@ -72,12 +72,12 @@
         <p>
           <mat-form-field>
             <input matInput type="password" placeholder="Password" formControlName="pass" >
-            <mat-error *ngIf="loginGroup.controls.pass.hasError('required')">Password is required</mat-error>
-            <mat-error *ngIf="loginGroup.controls.pass.hasError('minlength')">Password must have at least 8 characters</mat-error>
+            <mat-error *ngIf="signupGroup.controls.pass.hasError('required')">Password is required</mat-error>
+            <mat-error *ngIf="signupGroup.controls.pass.hasError('minlength')">Password must have at least 8 characters</mat-error>
           </mat-form-field>
         </p> 
         <div class="button">
-          <mat-checkbox *ngIf="signup===true"  [ngModelOptions]="{standalone: true}" id="check2" [(ngModel)]="signup">Already a User?</mat-checkbox>&nbsp;&nbsp;&nbsp;
+          <mat-checkbox *ngIf="signup===true"   id="check2" [checked]="!signup" (change)="toggle($event)">Existing User ? Login</mat-checkbox>&nbsp;&nbsp;&nbsp;
           <button *ngIf="signup===true" (click)="submitSignup()" mat-raised-button color="primary">Signup</button><br>
            
          </div>

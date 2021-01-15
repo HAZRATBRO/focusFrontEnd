@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-faculty-card',
   templateUrl: './faculty-card.component.html',
-  styleUrls: ['../faculty.component.scss'],
+  styleUrls: ['../faculty.component.scss', './faculty-card.component.css'],
 
   animations: [
     trigger(

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+ import { NgxSpinnerService } from 'ngx-spinner';
  
 import { Observable, throwError } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
@@ -19,7 +19,10 @@ export class SupportService {
    private currentUserSubject: BehaviorSubject<any> ;
    public currentUser: Observable<User>;
    public loggedInFlag: Observable<boolean>
-  private url:string = "http://localhost:8080/focus"
+
+
+  private url:string = "/focus"
+  // private url:string = "http://localhost:3000/focus"
   constructor(private spinner:NgxSpinnerService, private http:HttpClient) {
     let data = localStorage.getItem('currentUser') !== null?JSON.parse(localStorage.getItem('currentUser')||'{}'):null 
     this.currentUserSubject = new BehaviorSubject<User>(data);
@@ -28,22 +31,30 @@ export class SupportService {
     this.loggedInFlag = this.isLoggedIn.asObservable()
   }
   
+  getSampleTest():Observable<any>{
+    console.log("Sample")
+    const headers = new HttpHeaders().set('token', this.currentUserValue.token) 
+    return this.http.get<any>(this.url + '/getSampleQuiz' , {headers:headers} )
+  }
+
   getCompletionStatus(data:any):Observable<any>{
     const headers = new HttpHeaders().set('token', this.currentUserValue.token).set('quizName' , data) 
    return this.http.post<any>(this.url + '/completionStatus' , {quizName:data} , {headers:headers})
   }
 
-  getClassStatistic(data:any):Observable<any>{
-    const headers = new HttpHeaders().set('token', this.currentUserValue.token) 
-    console.log(data)
-    console.log("Responses" + " " + this.currentUserValue.token)
-    return this.http.post<any>(this.url+'/getClassStatistics' ,data ,{"headers":headers})
- 
+
+  getDashboardData():Observable<any>{
+
+    const headers = new HttpHeaders().set('token', this.currentUserValue.token)
+    return this.http.get<any>(this.url + '/getDashboardQuiz?userName='+this.currentUserValue.userName , {headers:headers})
+
   }
-    getUserResponse(data:any):Observable<any>{
+
+   
+  getUserResponse(data:any):Observable<any>{
     const headers = new HttpHeaders().set('token', this.currentUserValue.token) 
-      console.log(data)
-    console.log("Responses" + " " + this.currentUserValue.token)
+      
+    
     return this.http.post<any>(this.url+'/getQuizResponse' ,data ,{"headers":headers})
   }
 
@@ -157,9 +168,9 @@ export class SupportService {
   }
   
   
-  getFTSEQuiz():Observable<any>{
+  getFTSEQuiz(testName:string):Observable<any>{
     const headers = new HttpHeaders().set('token', this.currentUserValue.token).set( 'Content-Type',  'application/json')
-    return this.http.get<any>(this.url+'/getFTSEQuiz' , {"headers":headers})
+    return this.http.get<any>(this.url+'/getQuiz?testName='+testName , {"headers":headers})
   }
   saveQuiz(data:any , token:string): Observable<string>{
     const httpOptions = {
@@ -195,7 +206,14 @@ export class SupportService {
       })
     };
     console.log(data)
-    return this.http.post<any>(this.url + '/signup' , JSON.stringify(data) , httpOptions)
+    return this.http.post<any>(this.url + '/signup' , JSON.stringify(data) , httpOptions).pipe(
+      map(user =>{
+          localStorage.setItem('currentUser' , JSON.stringify(user))
+          this.currentUserSubject.next(user)
+          this.isLoggedIn.next(true)
+          return user
+      })
+    )
    }
 
    signIn(data:any):Observable<any>{
@@ -216,8 +234,7 @@ export class SupportService {
    }
 
    logout(){
-     localStorage.removeItem("currentUser")
-     localStorage.removeItem("userToken")
+     localStorage.clear()
      this.currentUserSubject.next(null)
      this.isLoggedIn.next(false)
      

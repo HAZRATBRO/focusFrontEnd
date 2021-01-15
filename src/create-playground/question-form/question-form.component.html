@@ -1,0 +1,61 @@
+<mat-accordion>
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header style="background-color: #70b806e3; ">
+      <mat-panel-title style="color: white;">
+        Question {{questionData.questionIndex}}
+      </mat-panel-title>
+      <mat-panel-description style="color: white;">
+        Edit Or Delete New Question  
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    
+    
+        <ng-template>Fill out Question Details</ng-template>
+        <mat-form-field appearance="fill">
+            <mat-label>Question Type</mat-label>
+            <mat-select [(ngModel)]="questionData.type"  required>
+              <mat-option value="SingleChoice"> Single Choice</mat-option>
+              <mat-option value="MultipleChoice">Multiple Choice</mat-option>
+              <mat-option value="FillInTheBlanks"> Fill In The Blanks</mat-option>
+              <mat-option value="NumericalType">Numerical Type</mat-option>
+             </mat-select>
+          </mat-form-field><br>
+           <div >
+             <img [src]="url" style="width: 30vw;"><br>
+            <mat-label>Upload Question Image</mat-label><br><br>
+            <input style="display: none;" (change)="onFileChange($event )" id="questionFile_{{questionData.questionIndex}}_{{sectionName}}" type="file" single/>
+                 <button color="primary" (click)="openFileBrowser('questionFile')" mat-raised-button>Upload</button>     
+                 <br>
+             </div>
+               
+                <br>
+                <mat-label >Correct Answer</mat-label>
+                  <mat-form-field *ngIf="questionData.type === 'NumericalType'">
+                    
+                    <input matInput (keypress)="validate($event)"  [(ngModel)]="questionData.correctAnswer"  placeholder="Enter Numerical Answer" required>
+                  </mat-form-field><br>
+                 
+                  <mat-form-field *ngIf="questionData.type === 'FillInTheBlanks' || questionData.type === 'MultipleChoice'">
+                     
+                    <input matInput  [(ngModel)]="questionData.correctAnswer"  placeholder="Enter Correct Answer" required>
+                    
+
+                  </mat-form-field><br>
+                
+                  <div *ngIf="questionData.type === 'SingleChoice'" class='control'>
+                     
+                    <mat-radio-group  required  [(ngModel)]="questionData.correctAnswer" aria-label="Select an option">
+                      <mat-radio-button class='options'  value="A"> A</mat-radio-button><br>
+                      <mat-radio-button class='options'  value="B"> B</mat-radio-button><br>
+                      <mat-radio-button class='options'  value="C"> C</mat-radio-button><br>
+                      <mat-radio-button class='options'  value="D"> D</mat-radio-button>
+                        </mat-radio-group>
+                      </div><br>
+        
+          <div>
+              <button color="warn" mat-raised-button (click)="deleteSelf()">Delete Question</button>
+        </div>
+     
+     
+  </mat-expansion-panel>
+</mat-accordion>   

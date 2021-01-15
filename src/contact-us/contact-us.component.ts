@@ -11,5 +11,5 @@ export class ContactUsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+ showThanks=false;
 }

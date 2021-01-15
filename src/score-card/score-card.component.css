@@ -79,7 +79,9 @@
     background-color:#f5eff640;
     transition-duration: 0.4s;
   }
-  
+  .overviewcard__icon{
+    font-size: larger;
+  }
   .main-cards {
     column-count: 2;
     column-gap: 20px;
@@ -96,6 +98,11 @@
     -webkit-column-break-inside: avoid;
     padding: 24px;
     box-sizing: border-box;
+  }
+
+  tbody{
+    background: white;
+    color: black;
   }
 
   /* Force varying heights to simulate dynamic content */
@@ -166,3 +173,23 @@
   .tabs a{
     color:black
   }
+
+  @media only screen and (max-width: 760px) {
+     .overviewcard{
+       width: 65%;
+     }
+      .skew-c{
+        display: none;
+      }
+      .colour-card{
+        background: white;
+      }
+      .nav-tabs > li {
+         
+        margin-bottom: 4px;
+    }
+    .colour-block{
+     overflow-x:auto; 
+     padding: 0px
+    }
+    }

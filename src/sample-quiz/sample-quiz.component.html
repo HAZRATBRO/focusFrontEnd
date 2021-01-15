@@ -1,0 +1,52 @@
+<div [@EnterLeave]="'flyIn'" class="cover">
+    <mat-tab-group color="primary" (selectedIndexChange)="changeQuestion(sectionIndex,0)" [(selectedIndex)]="sectionIndex" dynamicHeight>
+      <mat-tab *ngFor="let section of quizData.sections ;  let i = index" label="{{section.sectionName}}">
+       
+        
+      </mat-tab>
+      
+    </mat-tab-group>
+    
+    <div >
+      <h2>Question No. : {{questionIndex+1}}</h2>
+       
+      <app-question-view class="mat-elevation-z4" (onStateChange)="updateResponses($event)"  [data]="animationData" [questionData]='quizData.sections[sectionIndex].questions[questionIndex]'></app-question-view>
+      <p><b>Time left</b>  {{remainingTime | formatter}}  </p>
+      
+      <div class="jumpQuestionSec">
+        <ul>
+          <li>
+            <div class="left">
+                <a href="javascript:void(0)" class="ng-binding answered">1</a>
+             <p style="color: white;">Answered</p> 
+            </div>&nbsp;&nbsp;&nbsp;
+            <div class="right">
+              <a href="javascript:void(0)" class="ng-binding notAnswered">2</a>
+              <p>Not Answered</p>&nbsp;
+              </div>
+            </li>
+            <br>  
+            <li>
+            <div class="left">
+            <a href="javascript:void(0)" class="ng-binding notVisited" >3</a>
+            <p>Not Visited</p> 
+          </div>&nbsp;&nbsp;&nbsp;
+          <div class="right">
+          <a href="javascript:void(0)" class="ng-binding mark">4</a>
+          <p>Mark for Review</p>
+          </div>
+         </li>  
+        </ul>
+        
+        
+        <ul>
+          <li  *ngFor="let question of quizData.sections[sectionIndex].questions ; let i= index">
+            <a id="section_{{sectionIndex}}_{{i}}" [(class)]="question.style==undefined?'notVisited':question.style" (click)="changeQuestion(sectionIndex,i)"  >{{i+1}}</a> &nbsp;
+        </li> 
+        </ul>
+        <button class="button button3" (click)="submitTest()">Submit Test</button>
+    </div>
+
+    
+    </div>
+  </div>

@@ -17,7 +17,7 @@ import {
   transition,
   
 } from "@angular/animations";
- 
+  
 
 export enum Direction {
   Next,
@@ -69,6 +69,10 @@ export interface ActiveSlides {
   ]
 })
 export class CarouselComponent implements OnInit, OnDestroy {
+ 
+  options1:any;
+  options2:any;
+  products:any =[];
   @Input()
   slides: any[];
   @Input()
@@ -101,11 +105,59 @@ export class CarouselComponent implements OnInit, OnDestroy {
   set activeSlides(activeSlides: ActiveSlides) {
     this._activeSlides = activeSlides;
   }
+  
 
   constructor(
     private cd: ChangeDetectorRef,
     private differs: KeyValueDiffers
-  ) {}
+  ) {
+    this.products.push( {
+      title: '',
+       image: `../../assets/carousel_2.jpg`,
+    },
+    {
+      title:'',
+      image: `../../assets/carousel_3.jpg`
+    }
+  ) 
+    this.options1 = {
+      animation: {
+        animationClass: 'transition',
+        animationTime: 1000,
+      },
+      swipe: {
+        swipeable: true,
+        swipeVelocity: .004,
+      },
+      drag: {
+        draggable: true,
+        dragMany: true,
+      },
+      arrows: true,
+      infinite: true,
+      autoplay: {
+        enabled: true,
+        direction: 'right',
+        delay: 3000,
+        stopOnHover: true,
+        speed: 9000,
+      },
+      breakpoints: [
+        {
+          width: 768,
+          number: 1,
+        },
+        {
+          width: 991,
+          number: 1,
+        },
+        {
+          width: 9999,
+          number: 1,
+        },
+      ],
+    }
+  }
 
   ngOnInit(): void {
     if (this.slides) {
@@ -181,4 +233,6 @@ export class CarouselComponent implements OnInit, OnDestroy {
       clearInterval(this.currentInterval);
     }
   }
+             
+   
 }

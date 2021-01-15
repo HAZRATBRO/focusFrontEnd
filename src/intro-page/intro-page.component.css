@@ -40,3 +40,20 @@ p{
 padding: 1vw;
 color: white;
 }
+
+@media only screen and (max-width: 760px) { 
+    
+    .inner-page-banner-area{
+        padding: 12px 0 49px; 
+  }
+  
+   .skew-cc{
+       display: none;
+   }
+
+   .w3-container{
+    font-size: smaller
+   }
+
+  }
+  

@@ -41,3 +41,20 @@ display: inline-block;
     display: flex;
     justify-content: flex-end;
   }
+
+  @media only screen and (max-width: 760px) { 
+     .skew-c{
+       display: none;
+     }
+     .mat-card{
+      width: 150%;
+      margin-left: -16vw;
+     }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) { 
+    
+  
+  }
+  
