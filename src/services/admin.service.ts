@@ -21,8 +21,7 @@ export class AdminService {
   private url:string = "/focusAdmin"
   // private url:string = "http://localhost:3000/focusAdmin"
  
-  private access_key:string = 'AKIAJFRL3OCUMDBARK2A';
-  private private_key:string = 'hDr/9iC+LhLEDRHzlpSfTgZg4eIvSF0vxsvFJ1u8';
+  
 
   constructor(private http:HttpClient) {
     let data = localStorage.getItem('currentUser') !== null?JSON.parse(localStorage.getItem('currentUser')||'{}'):null 
